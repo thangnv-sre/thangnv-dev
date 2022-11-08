@@ -20,6 +20,9 @@ spec:
                   "--enableRiskyFeature=$(ENABLE_RISKY)"]
         ports:
         - containerPort: 8080
+        envfrom:
+          - secretRef:
+            name: secret-aws
         env:
         - name: ALT_GREETING
           valueFrom:
