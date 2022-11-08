@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker-png
+  labels:
+    app: worker-png
+spec:
+  selector:
+    matchLabels:
+      app: worker-png
+  template:
+    metadata:
+      labels:
+        app: worker-png
+    spec:
+      tolerations:
+        - key: "spotInstance"
+          operator: "Equal"
+          value: "true"
+          effect: "PreferNoSchedule"
+      containers:
+        - name: worker-png
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/worker-png:stg-e40cd78
+          envFrom:
+            - configMapRef:
+                name: worker-png-common-env
+            - secretRef:
+                name: worker-png-secret
+          resources:
+            requests:
+              memory: "6G"
+              cpu: "3"

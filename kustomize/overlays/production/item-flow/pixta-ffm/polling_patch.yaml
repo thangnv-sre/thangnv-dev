@@ -1,0 +1,128 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ffm-checktool-result-poller
+  labels:
+    app: ffm-checktool-result-poller
+    stage: production
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ffm-checktool-result-poller
+      stage: production
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-production
+      labels:
+        app: ffm-checktool-result-poller
+        stage: production
+    spec:
+      containers:
+        - name: ffm-checktool-result-poller
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/ffm_app:prod-4d6b35f
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ffm-footage-resize-poller
+  labels:
+    app: ffm-footage-resize-poller
+    stage: production
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ffm-footage-resize-poller
+      stage: production
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-production
+      labels:
+        app: ffm-footage-resize-poller
+        stage: production
+    spec:
+      containers:
+        - name: ffm-footage-resize-poller
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/ffm_app:prod-4d6b35f
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ffm-tag-poller
+  labels:
+    app: ffm-tag-poller
+    stage: production
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ffm-tag-poller
+      stage: production
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-production
+      labels:
+        app: ffm-tag-poller
+        stage: production
+    spec:
+      containers:
+        - name: ffm-tag-poller
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/ffm_app:prod-4d6b35f
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ffm-checktool-start-poller
+  labels:
+    app: ffm-checktool-start-poller
+    stage: production
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ffm-checktool-start-poller
+      stage: production
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-production
+      labels:
+        app: ffm-checktool-start-poller
+        stage: production
+    spec:
+      containers:
+        - name: ffm-checktool-start-poller
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/ffm_app:prod-4d6b35f
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ffm-auto-tag-result-poller
+  labels:
+    app: ffm-auto-tag-result-poller
+    stage: production
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ffm-auto-tag-result-poller
+      stage: production
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-production
+      labels:
+        app: ffm-auto-tag-result-poller
+        stage: production
+    spec:
+      containers:
+        - name: ffm-auto-tag-result-poller
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/ffm_app:prod-4d6b35f

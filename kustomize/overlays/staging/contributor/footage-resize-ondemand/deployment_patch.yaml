@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: footage-resize-demand
+  labels:
+    app: footage-resize-demand
+    stage: staging
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: footage-resize-demand
+      stage: staging
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::045675425505:role/footage-resize-ec2-stg
+      labels:
+        app: footage-resize-demand
+        stage: staging
+    spec:
+      containers:
+        - name: footage-resize-demand
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/footage-resize:stg-footage-resize-4.1.6
+          imagePullPolicy: Always

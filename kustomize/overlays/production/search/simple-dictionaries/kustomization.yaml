@@ -1,0 +1,19 @@
+bases:
+  - ../../../../base/search/simple-dictionaries
+resources:
+  - ingress.yaml
+  - pdb.yaml
+configMapGenerator:
+  - name: simple-dictionaries-nginx-env
+    literals:
+      - NGINX_HTTP_HOST="$http_host"
+      - NGINX_SERVER_NAME="simple-dictionaries.pixta.jp tag-admintool.pixta.jp"
+  - name: simple-dictionaries-web-config
+    behavior: merge
+    files:
+      - configmap/simple-dictionaries.conf
+generatorOptions:
+  disableNameSuffixHash: false
+patchesStrategicMerge:
+  - deployment_patch.yaml
+  - service_patch.yaml

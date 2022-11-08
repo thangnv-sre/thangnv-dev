@@ -1,0 +1,85 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: proximus
+  labels:
+    app: proximus
+spec:
+  selector:
+    matchLabels:
+      app: proximus
+  template:
+    metadata:
+      labels:
+        app: proximus
+    spec:
+      tolerations:
+        - key: "spotInstance"
+          operator: "Equal"
+          value: "true"
+          effect: "PreferNoSchedule"
+      volumes:
+        - name: proximus-ckpt-vol
+          persistentVolumeClaim:
+            claimName: proximus-ckpt-pvc-1
+        - name: proximus-index-vol
+          persistentVolumeClaim:
+            claimName: proximus-index-pvc-1
+      initContainers:
+        - name: init-ckpt
+          image: xueshanf/awscli:latest
+          command:
+            [
+              "/bin/sh",
+              "-c",
+              "aws s3 sync --delete s3://machine-learning-storage-stg/proximus/pvgg19_ckpt/ /tmp/ckpt/",
+            ]
+          volumeMounts:
+            - mountPath: /tmp/ckpt
+              name: proximus-ckpt-vol
+        - name: init-index
+          image: xueshanf/awscli:latest
+          command:
+            [
+              "/bin/sh",
+              "-c",
+              "aws s3 sync --delete s3://machine-learning-storage-stg/proximus/indexes/ /tmp/index/",
+            ]
+          volumeMounts:
+            - mountPath: /tmp/index
+              name: proximus-index-vol
+      containers:
+        - name: proximus
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/proximus:latest
+          imagePullPolicy: Always
+          # readinessProbe:
+          #   failureThreshold: 10
+          #   httpGet:
+          #     path: /health_check
+          #     port: 8899
+          #     scheme: HTTP
+          #   initialDelaySeconds: 20
+          #   periodSeconds: 60
+          #   successThreshold: 1
+          #   timeoutSeconds: 30
+          # envFrom:
+          #   - configMapRef:
+          #       name: proximus-common-env
+          ports:
+            - containerPort: 8899
+          resources:
+            requests:
+              memory: "12Gi"
+              cpu: "4000m"
+            limits:
+              memory: "16Gi"
+              cpu: "4000m"
+          volumeMounts:
+            - name: proximus-ckpt-vol
+              mountPath: /proximus/pvgg19.onnx
+              subPath: pvgg19.onnx
+            - name: proximus-index-vol
+              mountPath: /proximus/prod.idx
+              subPath: prod.idx
+
+        

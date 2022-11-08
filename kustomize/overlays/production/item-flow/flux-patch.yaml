@@ -1,0 +1,1593 @@
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.checktool-assign-checks-job: regex:^prod.*
+  name: checktool-assign-checks-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: checktool-assign-checks-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pixta-checktool-job:prod-3dfe88e
+            name: checktool-assign-checks-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.checktool-counting-payment-job: regex:^prod.*
+  name: checktool-counting-payment-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: checktool-counting-payment-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pixta-checktool-job:prod-3dfe88e
+            name: checktool-counting-payment-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.checktool-counting-queue-items-job: regex:^prod.*
+  name: checktool-counting-queue-items-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: checktool-counting-queue-items-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pixta-checktool-job:prod-3dfe88e
+            name: checktool-counting-queue-items-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.checktool-delayed-checks-job: regex:^prod.*
+  name: checktool-delayed-checks-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: checktool-delayed-checks-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pixta-checktool-job:prod-3dfe88e
+            name: checktool-delayed-checks-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.checktool-fix-checks-job: regex:^prod.*
+  name: checktool-fix-checks-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: checktool-fix-checks-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pixta-checktool-job:prod-3dfe88e
+            name: checktool-fix-checks-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.checktool-monthly-close-timesheet-job: regex:^prod.*
+  name: checktool-monthly-close-timesheet-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: checktool-monthly-close-timesheet-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pixta-checktool-job:prod-3dfe88e
+            name: checktool-monthly-close-timesheet-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.checktool-reflesh-queue-job: regex:^prod.*
+  name: checktool-reflesh-queue-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: checktool-reflesh-queue-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pixta-checktool-job:prod-3dfe88e
+            name: checktool-reflesh-queue-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.checktool-remind-logtime-job: regex:^prod.*
+  name: checktool-remind-logtime-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: checktool-remind-logtime-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pixta-checktool-job:prod-3dfe88e
+            name: checktool-remind-logtime-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.checktool-send-check-result-job: regex:^prod.*
+  name: checktool-send-check-result-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: checktool-send-check-result-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pixta-checktool-job:prod-3dfe88e
+            name: checktool-send-check-result-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.checktool-send-item-to-trouble-patrol-job: regex:^prod.*
+  name: checktool-send-item-to-trouble-patrol-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: checktool-send-item-to-trouble-patrol-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pixta-checktool-job:prod-3dfe88e
+            name: checktool-send-item-to-trouble-patrol-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.checktool-send-labeled-highscore-items-job: regex:^prod.*
+  name: checktool-send-labeled-highscore-items-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: checktool-send-labeled-highscore-items-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pixta-checktool-job:prod-3dfe88e
+            name: checktool-send-labeled-highscore-items-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.checktool-start-check-items-job: regex:^prod.*
+  name: checktool-start-check-items-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: checktool-start-check-items-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pixta-check-tool:prod-3dfe88e
+            name: checktool-start-check-items-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.checktool-summary-daily-checks-job: regex:^prod.*
+  name: checktool-summary-daily-checks-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: checktool-summary-daily-checks-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pixta-check-tool:prod-3dfe88e
+            name: checktool-summary-daily-checks-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.checktool-summary-daily-checks-on-yesterday-job: regex:^prod.*
+  name: checktool-summary-daily-checks-on-yesterday-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: checktool-summary-daily-checks-on-yesterday-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pixta-check-tool:prod-3dfe88e
+            name: checktool-summary-daily-checks-on-yesterday-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.checktool-timeout-checks-job: regex:^prod.*
+  name: checktool-timeout-checks-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: checktool-timeout-checks-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pixta-check-tool:prod-3dfe88e
+            name: checktool-timeout-checks-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.checktool-update-oldest-items-job: regex:^prod.*
+  name: checktool-update-oldest-items-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: checktool-update-oldest-items-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pixta-check-tool:prod-3dfe88e
+            name: checktool-update-oldest-items-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.checktool-update-ratio-footage-job: regex:^prod.*
+  name: checktool-update-ratio-footage-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: checktool-update-ratio-footage-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pixta-check-tool:prod-3dfe88e
+            name: checktool-update-ratio-footage-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.epsfm-abort-check-job: regex:^prod.*
+  name: epsfm-abort-check-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: epsfm-abort-check-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/eps-flow-manager:prod-3338a5b
+            name: epsfm-abort-check-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.epsfm-autocheck-job: regex:^prod.*
+  name: epsfm-autocheck-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: epsfm-autocheck-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/eps-flow-manager:prod-3338a5b
+            name: epsfm-autocheck-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.epsfm-checktool-job: regex:^prod.*
+  name: epsfm-checktool-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: epsfm-checktool-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/eps-flow-manager:prod-3338a5b
+            name: epsfm-checktool-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.epsfm-copy-job: regex:^prod.*
+  name: epsfm-copy-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: epsfm-copy-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/eps-flow-manager:prod-3338a5b
+            name: epsfm-copy-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.epsfm-epscheck-job: regex:^prod.*
+  name: epsfm-epscheck-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: epsfm-epscheck-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/eps-flow-manager:prod-3338a5b
+            name: epsfm-epscheck-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.epsfm-jpgcheck-job: regex:^prod.*
+  name: epsfm-jpgcheck-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: epsfm-jpgcheck-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/eps-flow-manager:prod-3338a5b
+            name: epsfm-jpgcheck-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.epsfm-update-result-job: regex:^prod.*
+  name: epsfm-update-result-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: epsfm-update-result-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/eps-flow-manager:prod-3338a5b
+            name: epsfm-update-result-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.ffm-abort-check-job: regex:^prod.*
+  name: ffm-abort-check-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: ffm-abort-check-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/ffm_app:prod-e3e0298
+            name: ffm-abort-check-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.ffm-new-job: regex:^prod.*
+  name: ffm-new-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: ffm-new-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/ffm_app:prod-e3e0298
+            name: ffm-new-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.ffm-request-check-tag-job: regex:^prod.*
+  name: ffm-request-check-tag-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: ffm-request-check-tag-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/ffm_app:prod-e3e0298
+            name: ffm-request-check-tag-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.ffm-resize-job: regex:^prod.*
+  name: ffm-resize-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: ffm-resize-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/ffm_app:prod-e3e0298
+            name: ffm-resize-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.ffm-review-ok-job: regex:^prod.*
+  name: ffm-review-ok-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: ffm-review-ok-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/ffm_app:prod-e3e0298
+            name: ffm-review-ok-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.ffm-tag-job: regex:^prod.*
+  name: ffm-tag-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: ffm-tag-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/ffm_app:prod-e3e0298
+            name: ffm-tag-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.ffm-update-result-job: regex:^prod.*
+  name: ffm-update-result-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: ffm-update-result-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/ffm_app:prod-e3e0298
+            name: ffm-update-result-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.pfm-abort-job: regex:^prod.*
+  name: pfm-abort-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: pfm-abort-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pfm_app:prod-2b4f471
+            name: pfm-abort-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.pfm-new-job: regex:^prod.*
+  name: pfm-new-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: pfm-new-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pfm_app:prod-2b4f471
+            name: pfm-new-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.pfm-ra-job: regex:^prod.*
+  name: pfm-ra-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: pfm-ra-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pfm_app:prod-2b4f471
+            name: pfm-ra-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.pfm-request-check-tag-job: regex:^prod.*
+  name: pfm-request-check-tag-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: pfm-request-check-tag-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pfm_app:prod-2b4f471
+            name: pfm-request-check-tag-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.pfm-review-ok-job: regex:^prod.*
+  name: pfm-review-ok-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: pfm-review-ok-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pfm_app:prod-2b4f471
+            name: pfm-review-ok-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.pfm-tag-job: regex:^prod.*
+  name: pfm-tag-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: pfm-tag-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pfm_app:prod-2b4f471
+            name: pfm-tag-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.pfm-thumbnail-job: regex:^prod.*
+  name: pfm-thumbnail-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: pfm-thumbnail-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pfm_app:prod-2b4f471
+            name: pfm-thumbnail-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.pfm-update-result-job: regex:^prod.*
+  name: pfm-update-result-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: pfm-update-result-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pfm_app:prod-2b4f471
+            name: pfm-update-result-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.pngfm-abort-check-job: regex:^prod.*
+  name: pngfm-abort-check-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: pngfm-abort-check-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/png-flow-manager:prod-6dda330
+            name: pngfm-abort-check-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.pngfm-checktool-job: regex:^prod.*
+  name: pngfm-checktool-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: pngfm-checktool-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/png-flow-manager:prod-6dda330
+            name: pngfm-checktool-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.pngfm-copy-job: regex:^prod.*
+  name: pngfm-copy-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: pngfm-copy-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/png-flow-manager:prod-6dda330
+            name: pngfm-copy-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.pngfm-jpgcheck-job: regex:^prod.*
+  name: pngfm-jpgcheck-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: pngfm-jpgcheck-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/png-flow-manager:prod-6dda330
+            name: pngfm-jpgcheck-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.pngfm-pngcheck-job: regex:^prod.*
+  name: pngfm-pngcheck-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: pngfm-pngcheck-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/png-flow-manager:prod-6dda330
+            name: pngfm-pngcheck-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.pngfm-product-job: regex:^prod.*
+  name: pngfm-product-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: pngfm-product-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/png-flow-manager:prod-6dda330
+            name: pngfm-product-job
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.pngfm-update-result-job: regex:^prod.*
+  name: pngfm-update-result-cronjob
+  namespace: prod-item-flow
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          $setElementOrder/containers:
+          - name: pngfm-update-result-job
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/png-flow-manager:prod-6dda330
+            name: pngfm-update-result-job
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.check-tool-downloader-app: regex:^prod.*
+    fluxcd.io/tag.check-tool-downloader-nginx: glob:stable
+  name: check-tool-downloader
+  namespace: prod-item-flow
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: check-tool-downloader-nginx
+      - name: check-tool-downloader-app
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pixta-downloader:prod-e6d5d3d
+        name: check-tool-downloader-app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.check-tool-backend-app: regex:^prod.*
+    fluxcd.io/tag.check-tool-backend-web: glob:stable
+  name: check-tool-web
+  namespace: prod-item-flow
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: check-tool-backend-web
+      - name: check-tool-backend-app
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pixta-check-tool:prod-3dfe88e
+        name: check-tool-backend-app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.checktool-abort-check-poller: regex:^prod.*
+  name: checktool-abort-check-poller
+  namespace: prod-item-flow
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: checktool-abort-check-poller
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pixta-check-tool:prod-3dfe88e
+        name: checktool-abort-check-poller
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.checktool-close-sending-check-result-poller: regex:^prod.*
+  name: checktool-close-sending-check-result-poller
+  namespace: prod-item-flow
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: checktool-close-sending-check-result-poller
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pixta-check-tool:prod-3dfe88e
+        name: checktool-close-sending-check-result-poller
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.checktool-create-check-items-poller: regex:^prod.*
+  name: checktool-create-check-items-poller
+  namespace: prod-item-flow
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: checktool-create-check-items-poller
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pixta-check-tool:prod-3dfe88e
+        name: checktool-create-check-items-poller
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.checktool-delayed-job: regex:^prod.*
+  name: checktool-delayed-job
+  namespace: prod-item-flow
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: checktool-delayed-job
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pixta-checktool-job:prod-3dfe88e
+        name: checktool-delayed-job
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.epsfm-app: regex:^prod.*
+    fluxcd.io/tag.nginx: glob:stable
+  name: epsfm
+  namespace: prod-item-flow
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: nginx
+      - name: epsfm-app
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/eps-flow-manager:prod-3338a5b
+        name: epsfm-app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.epsfm-autocheck-poller: regex:^prod.*
+  name: epsfm-autocheck-poller
+  namespace: prod-item-flow
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: epsfm-autocheck-poller
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/eps-flow-manager:prod-3338a5b
+        name: epsfm-autocheck-poller
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.epsfm-checktool-result-poller: regex:^prod.*
+  name: epsfm-checktool-result-poller
+  namespace: prod-item-flow
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: epsfm-checktool-result-poller
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/eps-flow-manager:prod-3338a5b
+        name: epsfm-checktool-result-poller
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.epsfm-checktool-start-poller: regex:^prod.*
+  name: epsfm-checktool-start-poller
+  namespace: prod-item-flow
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: epsfm-checktool-start-poller
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/eps-flow-manager:prod-3338a5b
+        name: epsfm-checktool-start-poller
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.epsfm-delayed-job: regex:^prod.*
+  name: epsfm-delayed-job
+  namespace: prod-item-flow
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: epsfm-delayed-job
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/eps-flow-manager:prod-3338a5b
+        name: epsfm-delayed-job
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.epsfm-epscheck-poller: regex:^prod.*
+  name: epsfm-epscheck-poller
+  namespace: prod-item-flow
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: epsfm-epscheck-poller
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/eps-flow-manager:prod-3338a5b
+        name: epsfm-epscheck-poller
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.epsfm-jpgcheck-poller: regex:^prod.*
+  name: epsfm-jpgcheck-poller
+  namespace: prod-item-flow
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: epsfm-jpgcheck-poller
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/eps-flow-manager:prod-3338a5b
+        name: epsfm-jpgcheck-poller
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.ffm-app: regex:^prod.*
+    fluxcd.io/tag.nginx: glob:stable
+  name: ffm
+  namespace: prod-item-flow
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: nginx
+      - name: ffm-app
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/nginx:stable
+        name: nginx
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/ffm_app:prod-e3e0298
+        name: ffm-app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.ffm-auto-tag-result-poller: regex:^prod.*
+  name: ffm-auto-tag-result-poller
+  namespace: prod-item-flow
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: ffm-auto-tag-result-poller
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/ffm_app:prod-e3e0298
+        name: ffm-auto-tag-result-poller
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.ffm-checktool-result-poller: regex:^prod.*
+  name: ffm-checktool-result-poller
+  namespace: prod-item-flow
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: ffm-checktool-result-poller
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/ffm_app:prod-e3e0298
+        name: ffm-checktool-result-poller
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.ffm-checktool-start-poller: regex:^prod.*
+  name: ffm-checktool-start-poller
+  namespace: prod-item-flow
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: ffm-checktool-start-poller
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/ffm_app:prod-e3e0298
+        name: ffm-checktool-start-poller
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.ffm-delayed-job: regex:^prod.*
+  name: ffm-delayed-job
+  namespace: prod-item-flow
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: ffm-delayed-job
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/ffm_app:prod-e3e0298
+        name: ffm-delayed-job
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.ffm-footage-resize-poller: regex:^prod.*
+  name: ffm-footage-resize-poller
+  namespace: prod-item-flow
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: ffm-footage-resize-poller
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/ffm_app:prod-e3e0298
+        name: ffm-footage-resize-poller
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.ffm-tag-poller: regex:^prod.*
+  name: ffm-tag-poller
+  namespace: prod-item-flow
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: ffm-tag-poller
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/ffm_app:prod-e3e0298
+        name: ffm-tag-poller
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.nginx: glob:stable
+    fluxcd.io/tag.pfm-app: regex:^prod.*
+  name: pfm
+  namespace: prod-item-flow
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: nginx
+      - name: pfm-app
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pfm_app:prod-2b4f471
+        name: pfm-app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.pfm-auto-tag-result-poller: regex:^prod.*
+  name: pfm-auto-tag-result-poller
+  namespace: prod-item-flow
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: pfm-auto-tag-result-poller
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pfm_app:prod-2b4f471
+        name: pfm-auto-tag-result-poller
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.pfm-checktool-result-poller: regex:^prod.*
+  name: pfm-checktool-result-poller
+  namespace: prod-item-flow
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: pfm-checktool-result-poller
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pfm_app:prod-2b4f471
+        name: pfm-checktool-result-poller
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.pfm-checktool-start-poller: regex:^prod.*
+  name: pfm-checktool-start-poller
+  namespace: prod-item-flow
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: pfm-checktool-start-poller
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pfm_app:prod-2b4f471
+        name: pfm-checktool-start-poller
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.pfm-delayed-job: regex:^prod.*
+  name: pfm-delayed-job
+  namespace: prod-item-flow
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: pfm-delayed-job
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pfm_app:prod-2b4f471
+        name: pfm-delayed-job
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.pfm-product-poller: regex:^prod.*
+  name: pfm-product-poller
+  namespace: prod-item-flow
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: pfm-product-poller
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pfm_app:prod-2b4f471
+        name: pfm-product-poller
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.pfm-ra-poller: regex:^prod.*
+  name: pfm-ra-poller
+  namespace: prod-item-flow
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: pfm-ra-poller
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pfm_app:prod-2b4f471
+        name: pfm-ra-poller
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.pfm-tag-poller: regex:^prod.*
+  name: pfm-tag-poller
+  namespace: prod-item-flow
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: pfm-tag-poller
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pfm_app:prod-2b4f471
+        name: pfm-tag-poller
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.pfm-thumbnail-poller: regex:^prod.*
+  name: pfm-thumbnail-poller
+  namespace: prod-item-flow
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: pfm-thumbnail-poller
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pfm_app:prod-2b4f471
+        name: pfm-thumbnail-poller
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.nginx: glob:stable
+    fluxcd.io/tag.pngfm-app: regex:^prod.*
+  name: pngfm
+  namespace: prod-item-flow
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: nginx
+      - name: pngfm-app
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/png-flow-manager:prod-6dda330
+        name: pngfm-app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.pngfm-checktool-result-poller: regex:^prod.*
+  name: pngfm-checktool-result-poller
+  namespace: prod-item-flow
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: pngfm-checktool-result-poller
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/png-flow-manager:prod-6dda330
+        name: pngfm-checktool-result-poller
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.pngfm-checktool-start-poller: regex:^prod.*
+  name: pngfm-checktool-start-poller
+  namespace: prod-item-flow
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: pngfm-checktool-start-poller
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/png-flow-manager:prod-6dda330
+        name: pngfm-checktool-start-poller
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.pngfm-delayed-job: regex:^prod.*
+  name: pngfm-delayed-job
+  namespace: prod-item-flow
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: pngfm-delayed-job
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/png-flow-manager:prod-6dda330
+        name: pngfm-delayed-job
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.pngfm-jpgcheck-poller: regex:^prod.*
+  name: pngfm-jpgcheck-poller
+  namespace: prod-item-flow
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: pngfm-jpgcheck-poller
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/png-flow-manager:prod-6dda330
+        name: pngfm-jpgcheck-poller
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.pngfm-pngcheck-poller: regex:^prod.*
+  name: pngfm-pngcheck-poller
+  namespace: prod-item-flow
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: pngfm-pngcheck-poller
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/png-flow-manager:prod-6dda330
+        name: pngfm-pngcheck-poller
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.pngfm-product-poller: regex:^prod.*
+  name: pngfm-product-poller
+  namespace: prod-item-flow
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: pngfm-product-poller
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/png-flow-manager:prod-6dda330
+        name: pngfm-product-poller
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    flux.weave.works/automated: "false"
+  name: worker-eps-to-png
+  namespace: prod-item-flow
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.worker-png: regex:^prod.*
+  name: worker-png
+  namespace: prod-item-flow
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    flux.weave.works/automated: "false"
+  name: worker-png-to-jpg
+  namespace: prod-item-flow
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.worker-product: regex:^prod.*
+  name: worker-product
+  namespace: prod-item-flow
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: worker-product
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/worker-product:prod-977c381
+        name: worker-product
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.worker-product-reserved: regex:^prod.*
+  name: worker-product-reserved
+  namespace: prod-item-flow
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: worker-product-reserved
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/worker-product-reserved:prod-977c381
+        name: worker-product-reserved
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.worker-thumbnail: regex:^prod.*
+  name: worker-thumbnail
+  namespace: prod-item-flow
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: worker-thumbnail
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/worker-thumbnail:prod-ebecb94
+        name: worker-thumbnail
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    flux.weave.works/automated: "true"
+    fluxcd.io/tag.worker-thumbnail-reserved: regex:^prod.*
+  name: worker-thumbnail-reserved
+  namespace: prod-item-flow
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: worker-thumbnail-reserved
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/worker-thumbnail-reserved:prod-ebecb94
+        name: worker-thumbnail-reserved

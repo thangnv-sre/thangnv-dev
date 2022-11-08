@@ -1,0 +1,94 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ffm
+  labels:
+    app: ffm
+spec:
+  selector:
+    matchLabels:
+      app: ffm
+  template:
+    metadata:
+      labels:
+        app: ffm
+    spec:
+      volumes:
+        - configMap:
+            items:
+              - key: nginx.conf
+                path: nginx.conf
+            name: ffm-nginx-conf
+          name: nginx-conf
+        - configMap:
+            items:
+              - key: pixta-ffm.conf
+                path: pixta-ffm.conf
+            name: ffm-nginx-conf
+          name: site-conf
+        - configMap:
+            items:
+              - key: unicorn.rb
+                path: unicorn.rb
+            name: ffm-unicorn-rb
+          name: unicorn-conf
+        - name: web-sock
+          emptyDir: {}
+      containers:
+        - name: ffm-app
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/ffm_app:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - mountPath: /var/www/footage-flow-manager/config/unicorn.rb
+              name: unicorn-conf
+              subPath: unicorn.rb
+            - mountPath: /var/run/sock
+              name: web-sock
+          resources:
+            requests:
+              memory: "700Mi"
+              cpu: "100m"
+            limits:
+              memory: "1400Mi"
+          envFrom:
+            - configMapRef:
+                name: ffm-common-env
+            - secretRef:
+                name: ffm-secret
+        - name: nginx
+          image: nginx:1.17.9
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "100Mi"
+              cpu: "10m"
+            limits:
+              memory: "200Mi"
+          ports:
+            - containerPort: 80
+            - containerPort: 443
+          volumeMounts:
+            - mountPath: /var/run/sock
+              name: web-sock
+            - mountPath: /config/pixta-ffm.conf
+              name: site-conf
+              subPath: pixta-ffm.conf
+            - mountPath: /config/nginx.conf
+              name: nginx-conf
+              subPath: nginx.conf
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - sh
+                  - -c
+                  - cp -pf /config/nginx.conf /etc/nginx/nginx.conf && mkdir -p /etc/nginx/sites-enabled  && envsubst '$RAILS_ROOT' < /config/pixta-ffm.conf > /etc/nginx/sites-enabled/pixta-ffm.conf && nginx -s reload
+            preStop:
+              exec:
+                command:
+                  - /usr/sbin/nginx
+                  - -s
+                  - quit
+          envFrom:
+            - configMapRef:
+                name: ffm-common-env

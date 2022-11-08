@@ -1,0 +1,11 @@
+bases:
+  - ../../../../base/lab/learning-to-rank
+resources:
+  - secret.yaml
+configMapGenerator:
+  - name: ltr-common-env
+    behavior: merge
+    literals:
+      - STAGING_HOST=https://staging.pixta.jp
+patchesStrategicMerge:
+  - cronjob_patch.yaml

@@ -1,0 +1,49 @@
+bases:
+  - ../../../../base/customer/pixta-editor
+resources:
+  - secret.yaml
+  - ingress.yaml
+  # - jobs.yaml
+  # - hpa.yaml
+configMapGenerator:
+  - name: editor-common-env
+    behavior: merge
+    literals:
+      - S3_BUCKET=pixtavietnam-editor-staging
+      - RAILS_ENV=staging
+      - AWS_REGION=ap-northeast-1
+      - DATABASE_USERNAME=admin
+      - DATABASE_DBNAME=editor-staging
+      - DATABASE_HOST=editor-staging.cyqbfzctkesh.ap-northeast-1.rds.amazonaws.com
+      - DATABASE_HOST_SLAVE=editor-staging.cyqbfzctkesh.ap-northeast-1.rds.amazonaws.com
+      - TOKEN_SLACK_BOT=xoxb-39320022977-2339127418176-gqHndetCOIfyrvXcjooKs6pY
+  - name: editor-nginx-conf
+    behavior: merge
+    files:
+      - configmap/editor-api.conf
+  - name: editor-frontend-nginx-conf
+    behavior: merge
+    files:
+      - configmap/editor.conf
+  - name: pixta-common-env
+    behavior: merge
+    literals:
+      - DATABASE_DBNAME=pixtamigration
+      - DATABASE_HOST=pixtastaging-vpc-rds.pixta.jp
+      - IMASIA_DATABASE_DBNAME=imasia_staging
+      - IMASIA_DATABASE_HOST=imasia-staging.rds.pixta.jp
+      - RANCHER_API_SERVER=https://rancher-staging.pixta.jp/k8s/clusters/c-kkhvw/
+  # - name: pixta-editor-script
+  #   files:
+  #     - configmap/update_editor_datas_batch.rb
+  - name: editor-frontend-common-env
+    literals:
+      - USERNAME=editoradmin
+      - PASSWORD=abcd1234
+      - NODE_ROOT=/usr/src/editor
+generatorOptions:
+  disableNameSuffixHash: true
+patchesStrategicMerge:
+  - deployment_patch.yaml
+  - service_patch.yaml
+  # - cronjob_patch.yaml

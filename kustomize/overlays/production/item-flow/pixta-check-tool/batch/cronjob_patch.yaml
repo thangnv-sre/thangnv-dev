@@ -1,0 +1,322 @@
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: check-tool-fix-checks
+  labels:
+    app: check-tool-fix-checks
+    stage: production
+spec:
+  schedule: "10,40 0-14 * * *"
+  suspend: true
+  startingDeadlineSeconds: 900
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-production
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: check-tool-send-check-result1
+  labels:
+    app: check-tool-send-check-result1
+    stage: production
+spec:
+  schedule: "0 18,20,22 * * *"
+  suspend: true
+  startingDeadlineSeconds: 3600
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-production
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: check-tool-send-check-result2
+  labels:
+    app: check-tool-send-check-result2
+    stage: production
+spec:
+  schedule: "20,50 0-14 * * *"
+  suspend: true
+  startingDeadlineSeconds: 900
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-production
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: check-tool-start-check-items1
+  labels:
+    app: check-tool-start-check-items1
+    stage: production
+spec:
+  schedule: "0 17,19,21 * * *"
+  suspend: true
+  startingDeadlineSeconds: 3600
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-production
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: check-tool-start-check-items2
+  labels:
+    app: check-tool-start-check-items2
+    stage: production
+spec:
+  schedule: "0,30 0-17 * * *"
+  suspend: true
+  startingDeadlineSeconds: 900
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-production
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: check-tool-assign-checks1
+  labels:
+    app: check-tool-assign-checks1
+    stage: production
+spec:
+  schedule: "10,40 16-17 * * *"
+  suspend: true
+  startingDeadlineSeconds: 900
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-production
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: check-tool-assign-checks2
+  labels:
+    app: check-tool-assign-checks2
+    stage: production
+spec:
+  schedule: "10,40 19-23,0-15 * * *"
+  suspend: true
+  startingDeadlineSeconds: 900
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-production
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: check-tool-timeout-checks
+  labels:
+    app: check-tool-timeout-checks
+    stage: production
+spec:
+  schedule: "0 * * * *"
+  suspend: true
+  startingDeadlineSeconds: 1800
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-production
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: check-tool-counting-queue-items1
+  labels:
+    app: check-tool-counting-queue-items1
+    stage: production
+spec:
+  schedule: "15,45 15,16 * * *"
+  suspend: true
+  startingDeadlineSeconds: 900
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-production
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: check-tool-counting-queue-items2
+  labels:
+    app: check-tool-counting-queue-items2
+    stage: production
+spec:
+  schedule: "*/15 17-23,0-14 * * *"
+  suspend: true
+  startingDeadlineSeconds: 450
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-production
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: check-tool-count-daily-checks1
+  labels:
+    app: check-tool-count-daily-checks1
+    stage: production
+spec:
+  schedule: "0 15 * * *"
+  suspend: true
+  startingDeadlineSeconds: 3600
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-production
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: check-tool-count-daily-checks2
+  labels:
+    app: check-tool-count-daily-checks2
+    stage: production
+spec:
+  schedule: "0,30 17-23,0-14 * * *"
+  suspend: true
+  startingDeadlineSeconds: 900
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-production
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: check-tool-delayed-checks
+  labels:
+    app: check-tool-delayed-checks
+    stage: production
+spec:
+  schedule: "0 15 * * *"
+  suspend: true
+  startingDeadlineSeconds: 3600
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-production
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: check-tool-counting-payments
+  labels:
+    app: check-tool-counting-payments
+    stage: production
+spec:
+  schedule: "30 15 1 * *"
+  suspend: true
+  startingDeadlineSeconds: 3600
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-production
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: check-tool-send-item-to-trouble-patrol
+  labels:
+    app: check-tool-send-item-to-trouble-patrol
+    stage: production
+spec:
+  schedule: "0 14 * * 0"
+  suspend: true
+  startingDeadlineSeconds: 3600
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-production
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: check-tool-reflesh-queue
+  labels:
+    app: check-tool-reflesh-queue
+    stage: production
+spec:
+  schedule: "30 18 * * *"
+  suspend: true
+  startingDeadlineSeconds: 3600
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-production
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: check-tool-update-oldest-item-ids
+  labels:
+    app: check-tool-update-oldest-item-ids
+    stage: production
+spec:
+  schedule: "0 19 * * *"
+  suspend: true
+  startingDeadlineSeconds: 3600
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-production

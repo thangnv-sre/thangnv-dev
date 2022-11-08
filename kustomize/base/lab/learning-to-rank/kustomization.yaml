@@ -1,0 +1,20 @@
+resources:
+  - cronjob.yaml
+configMapGenerator:
+  - name: ltr-common-env
+    literals:
+      - S3_BUCKET=machine-learning-storage-prod
+      - ES_HOST=86fa8e5a0e30443e9ae6175ba9e3b094.ap-northeast-1.aws.found.io
+      - PORT=9243
+      - RELEVANCE_MODE=binary
+      - SAMPLE_SIZE=120
+      - SAMPLE_RELEVANCE_PROPORTION=0.5
+      - PERIOD=31556926
+      - NUM_SAMPLE_GROUPS=10000
+      - REMOVE_FEATURES=time_on_sale
+      - SLACK_CHANNEL="#development"
+      - S3_STAGING_FOLDER=l2r/v2/ckpts/staging
+      - S3_PRODUCTION_FOLDER=l2r/v2/ckpts/production
+      - NUM_WORKERS=4
+generatorOptions:
+  disableNameSuffixHash: true

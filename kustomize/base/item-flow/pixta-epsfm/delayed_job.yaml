@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: epsfm-delayed-job
+  labels:
+    app: epsfm-delayed-job
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: epsfm-delayed-job
+  template:
+    metadata:
+      labels:
+        app: epsfm-delayed-job
+    spec:
+      containers:
+      - name: epsfm-delayed-job
+        image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/eps-flow-manager:latest
+        imagePullPolicy: Always
+        command: ["bash", "-c", "rake jobs:work"]
+        envFrom:
+          - secretRef:
+              name: epsfm-secret
+          - configMapRef:
+              name: epsfm-common-env
+        resources:
+          requests:
+            memory: "200Mi"
+            cpu: "50m"
+          limits:
+            memory: "200Mi"
+            cpu: "80m"

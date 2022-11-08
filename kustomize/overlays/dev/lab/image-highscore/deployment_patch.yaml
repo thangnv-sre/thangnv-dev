@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: image-highscore
+  labels:
+    app: image-highscore
+    stage: staging
+spec:
+  selector:
+    matchLabels:
+      app: image-highscore
+      stage: staging
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+      labels:
+        app: image-highscore
+        stage: staging

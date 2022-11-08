@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: checktool-delayed-job
+  labels:
+    app: checktool-delayed-job
+spec:
+  selector:
+    matchLabels:
+      app: checktool-delayed-job
+  template:
+    metadata:
+      labels:
+        app: checktool-delayed-job
+    spec:
+      containers:
+        - name: checktool-delayed-job
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pixta-check-tool:latest
+          imagePullPolicy: Always
+          command: ["bash", "-c", "rake jobs:work"]
+          envFrom:
+            - configMapRef:
+                name: check-tool-common-env
+            - configMapRef:
+                name: check-tool-application-env
+            - secretRef:
+                name: check-tool-secret
+          resources:
+            requests:
+              memory: "200Mi"
+              cpu: "50m"

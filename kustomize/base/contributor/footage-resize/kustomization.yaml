@@ -1,0 +1,19 @@
+resources:
+  - deployment.yaml
+configMapGenerator:
+  - name: footage-resize-common-env
+    literals:
+      - WORKER_TYPE=resize
+      - AIRBRAKE_PROJECT_ID=185980
+      - AIRBRAKE_PROJECT_KEY=240606050eee430b76fcb7dce4886619
+      - DEPLOY_DIR=/srv/www/footage_resize
+      - REGION_NAME=jp
+  - name: footage-resize-on-submit-common-env
+    literals:
+      - WORKER_TYPE=submit
+      - AIRBRAKE_PROJECT_ID=185980
+      - AIRBRAKE_PROJECT_KEY=240606050eee430b76fcb7dce4886619
+      - DEPLOY_DIR=/srv/www/footage_resize
+      - REGION_NAME=jp
+generatorOptions:
+  disableNameSuffixHash: true

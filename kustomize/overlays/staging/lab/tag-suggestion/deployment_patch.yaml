@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tag-suggestion
+  labels:
+    app: tag-suggestion
+    stage: staging
+spec:
+  selector:
+    matchLabels:
+      app: tag-suggestion
+      stage: staging
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+      labels:
+        app: tag-suggestion
+        stage: staging
+    spec:
+      initContainers:
+        - name: init-ckpt
+          image: xueshanf/awscli:latest
+          command:
+            [
+              "/bin/sh",
+              "-c",
+              "aws s3 sync --delete s3://machine-learning-storage-stg/tag-suggestion/version2.1/ckpt/onnx/ /tmp/ckpt/",
+            ]
+          volumeMounts:
+            - mountPath: /tmp/ckpt
+              name: tag-ckpt-vol
+        - name: init-classes
+          image: xueshanf/awscli:latest
+          command:
+            [
+              "/bin/sh",
+              "-c",
+              "aws s3 sync --delete s3://machine-learning-storage-stg/tag-suggestion/version2.1/classes/ /tmp/classes/",
+            ]
+          volumeMounts:
+            - mountPath: /tmp/classes
+              name: tag-classes-vol
+      containers:
+        - name: tag-suggestion
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/lab-tag-suggestion:2.1.2
+          command: ["/bin/sh"]
+          args:
+            [
+              "-c",
+              "gunicorn --bind 0.0.0.0:8000 --workers=1 --max-requests 1000 -- wsgi:app",
+            ]
+          volumeMounts:
+            - $patch: replace
+            - name: tag-conf
+              mountPath: /projects/tag_suggestion/src/config/inference.yml
+              subPath: inference.yml
+            - name: tag-ckpt-vol
+              mountPath: /projects/tag_suggestion/src/data/ckpt/model.onnx
+              subPath: resnest50/model.onnx
+            - name: tag-classes-vol
+              mountPath: /projects/tag_suggestion/src/data/ckpt/label_15k_ja.json
+              subPath: label_15k_ja.json
+      volumes:
+        - name: tag-classes-vol
+          persistentVolumeClaim:
+            claimName: tag-classes-pvc

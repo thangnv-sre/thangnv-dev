@@ -1,0 +1,16 @@
+bases:
+  - ../../../../base/item-flow/pixta-ffm
+resources:
+  - ingress.yaml
+  - secret.yaml
+configMapGenerator:
+  - name: ffm-common-env
+    behavior: merge
+    literals:
+      - RAILS_ENV=staging
+patchesStrategicMerge:
+  - deployment_patch.yaml
+  - cronjob_patch.yaml
+  - delayed_job_patch.yaml
+  - polling_patch.yaml
+  - service_patch.yaml

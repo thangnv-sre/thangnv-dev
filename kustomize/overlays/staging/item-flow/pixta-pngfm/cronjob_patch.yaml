@@ -1,0 +1,251 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: pngfm-pngcheck-cronjob
+  labels:
+    app: pngfm-pngcheck-cronjob
+    stage: staging
+spec:
+  schedule: "*/5 * * * *"
+  concurrencyPolicy: "Forbid"
+  suspend: true
+  startingDeadlineSeconds: 180
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+          labels:
+            app: pngfm-pngcheck-cronjob
+            stage: staging
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: pngfm-registag-cronjob
+  labels:
+    app: pngfm-registag-cronjob
+    stage: staging
+spec:
+  schedule: "*/5 * * * *"
+  concurrencyPolicy: "Forbid"
+  suspend: true
+  startingDeadlineSeconds: 180
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+          labels:
+            app: pngfm-registag-cronjob
+            stage: staging
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: pngfm-genoriginal-cronjob
+  labels:
+    app: pngfm-genoriginal-cronjob
+    stage: staging
+spec:
+  schedule: "*/5 * * * *"
+  concurrencyPolicy: "Forbid"
+  suspend: true
+  startingDeadlineSeconds: 180
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+          labels:
+            app: pngfm-genoriginal-cronjob
+            stage: staging
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: pngfm-exif-cronjob
+  labels:
+    app: pngfm-exif-cronjob
+    stage: staging
+spec:
+  schedule: "*/5 * * * *"
+  concurrencyPolicy: "Forbid"
+  suspend: true
+  startingDeadlineSeconds: 180
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+          labels:
+            app: pngfm-exif-cronjob
+            stage: staging
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: pngfm-gencheck-cronjob
+  labels:
+    app: pngfm-gencheck-cronjob
+    stage: staging
+spec:
+  schedule: "*/5 * * * *"
+  concurrencyPolicy: "Forbid"
+  suspend: true
+  startingDeadlineSeconds: 180
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+          labels:
+            app: pngfm-gencheck-cronjob
+            stage: staging
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: pngfm-copy-cronjob
+  labels:
+    app: pngfm-copy-cronjob
+    stage: staging
+spec:
+  schedule: "*/3 * * * *"
+  concurrencyPolicy: "Forbid"
+  suspend: true
+  startingDeadlineSeconds: 180
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+          labels:
+            app: pngfm-copy-cronjob
+            stage: staging
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: pngfm-jpgcheck-cronjob
+  labels:
+    app: pngfm-jpgcheck-cronjob
+    stage: staging
+spec:
+  schedule: "*/4 * * * *"
+  concurrencyPolicy: "Forbid"
+  suspend: true
+  startingDeadlineSeconds: 180
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+          labels:
+            app: pngfm-jpgcheck-cronjob
+            stage: staging
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: pngfm-checktool-cronjob
+  labels:
+    app: pngfm-checktool-cronjob
+    stage: staging
+spec:
+  schedule: "*/6 * * * *"
+  concurrencyPolicy: "Forbid"
+  suspend: true
+  startingDeadlineSeconds: 180
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+          labels:
+            app: pngfm-checktool-cronjob
+            stage: staging
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: pngfm-product-cronjob
+  labels:
+    app: pngfm-product-cronjob
+    stage: staging
+spec:
+  schedule: "*/3 * * * *"
+  concurrencyPolicy: "Forbid"
+  suspend: true
+  startingDeadlineSeconds: 180
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+          labels:
+            app: pngfm-product-cronjob
+            stage: staging
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: pngfm-update-result-cronjob
+  labels:
+    app: pngfm-update-result-cronjob
+    stage: staging
+spec:
+  schedule: "*/5 * * * *"
+  concurrencyPolicy: "Forbid"
+  suspend: true
+  startingDeadlineSeconds: 180
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+          labels:
+            app: pngfm-update-result-cronjob
+            stage: staging
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: pngfm-abort-check-cronjob
+  labels:
+    app: pngfm-abort-check-cronjob
+    stage: staging
+spec:
+  schedule: "0 * * * *"
+  startingDeadlineSeconds: 180
+  concurrencyPolicy: "Forbid"
+  suspend: true
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+          labels:
+            app: pngfm-abort-check-cronjob
+            stage: staging

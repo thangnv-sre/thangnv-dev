@@ -1,0 +1,83 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx-external
+  name: check-tool-web-ingress-external
+spec:
+  rules:
+    - host: check.pixta.jp
+      http:
+        paths:
+          - backend:
+              serviceName: check-tool-web-svc
+              servicePort: 80
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: check-tool-downloader-ingress-external
+  annotations:
+    kubernetes.io/ingress.class: nginx-external
+spec:
+  rules:
+    - host: download-check-vn.pixta.jp
+      http:
+        paths:
+          - backend:
+              serviceName: check-tool-downloader-svc
+              servicePort: 80
+    - host: sg-download-check-vn.pixta.jp
+      http:
+        paths:
+          - backend:
+              serviceName: check-tool-downloader-svc
+              servicePort: 80
+    - host: download-check.pixta.jp
+      http:
+        paths:
+          - backend:
+              serviceName: check-tool-downloader-svc
+              servicePort: 80
+    - host: euwest-download-check-vn.pixta.jp
+      http:
+        paths:
+          - backend:
+              serviceName: check-tool-downloader-svc
+              servicePort: 80
+    - host: useast-download-check-vn.pixta.jp
+      http:
+        paths:
+          - backend:
+              serviceName: check-tool-downloader-svc
+              servicePort: 80
+    - host: uswest-download-check-vn.pixta.jp
+      http:
+        paths:
+          - backend:
+              serviceName: check-tool-downloader-svc
+              servicePort: 80
+    - host: sg-download-check.pixta.jp
+      http:
+        paths:
+          - backend:
+              serviceName: check-tool-downloader-svc
+              servicePort: 80
+    - host: euwest-download-check.pixta.jp
+      http:
+        paths:
+          - backend:
+              serviceName: check-tool-downloader-svc
+              servicePort: 80
+    - host: useast-download-check.pixta.jp
+      http:
+        paths:
+          - backend:
+              serviceName: check-tool-downloader-svc
+              servicePort: 80
+    - host: uswest-download-check.pixta.jp
+      http:
+        paths:
+          - backend:
+              serviceName: check-tool-downloader-svc
+              servicePort: 80

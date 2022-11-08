@@ -1,0 +1,51 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.footage-resize: regex:^stg.*
+  name: footage-resize
+  namespace: stg-contributor
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: footage-resize
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/footage-resize:stg-footage-resize
+        name: footage-resize
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.footage-resize-on-submit: regex:^stg.*
+  name: footage-resize-demand
+  namespace: stg-contributor
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: footage-resize-demand
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/footage-resize:stg-footage-resize
+        name: footage-resize-demand
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.footage-resize-on-submit: regex:^stg.*
+  name: footage-resize-on-submit
+  namespace: stg-contributor
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: footage-resize-on-submit
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/footage-resize:stg-footage-resize
+        name: footage-resize-on-submit

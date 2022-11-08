@@ -1,0 +1,36 @@
+resources:
+  - cronjob.yaml
+  - polling.yaml
+  - deployment.yaml
+  - service.yaml
+  - delayed_job.yaml
+configMapGenerator:
+  - name: check-tool-web-config
+    files:
+      - configmap/nginx.conf
+      - configmap/check-tool.conf
+      - configmap/unicorn.rb
+  - name: check-tool-downloader-web-config
+    files:
+      - configmap/nginx.conf
+      - configmap/check-tool-downloader.conf
+      # - configmap/unicorn.rb
+      - configmap/puma.rb
+  - name: check-tool-common-env
+    literals:
+      - TZ=Asia/Tokyo
+      - LANG=ja_JP.UTF-8
+  - name: check-tool-application-env
+    literals:
+      - RAILS_ROOT=/pixta-check-tool
+      - NEWRELIC_PRO=false
+      - RAILS_LOG_TO_STDOUT=true
+      - AWS_REGION=ap-northeast-1
+  - name: check-tool-downloader-application-env
+    literals:
+      - RAILS_ROOT=/pixta-downloader
+      - RAILS_LOG_TO_STDOUT=true
+      - NEWRELIC_PRO=false
+      - AWS_REGION=ap-northeast-1
+generatorOptions:
+  disableNameSuffixHash: false

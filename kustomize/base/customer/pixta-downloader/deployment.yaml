@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pixta-downloader
+  labels:
+    app: pixta-downloader
+spec:
+  selector:
+    matchLabels:
+      app: pixta-downloader
+  template:
+    metadata:
+      labels:
+        app: pixta-downloader
+    spec:
+      volumes:
+        - emptyDir: {}
+          name: app
+        - configMap:
+            name: pixta-downloader-web-config
+          name: web-conf
+      containers:
+        - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/nginx:stable
+          name: pixta-downloader-nginx
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          # resources:
+          #   requests:
+          #     memory: "100Mi"
+          #     cpu: "100m"
+          #   limits:
+          #     memory: "200Mi"
+          volumeMounts:
+            - mountPath: /app
+              name: app
+            - mountPath: /config
+              name: web-conf
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - sh
+                  - -c
+                  - rm -f /etc/nginx/conf.d/default.conf
+                    && envsubst "$(env | awk -F = '{printf " $%s", $1}')" < /config/pixta-downloader.conf > /etc/nginx/conf.d/pixta-downloader.conf
+                    && cp -pf /config/nginx.conf /etc/nginx/nginx.conf && nginx -s reload
+            preStop:
+              exec:
+                command:
+                  - /usr/sbin/nginx
+                  - -s
+                  - quit
+
+        # Rails Application Container
+        - name: pixta-downloader-app
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pixta-downloader:latest
+          imagePullPolicy: Always
+          command:
+            - sh
+            - -c
+          args:
+            - cp -pR ${RAILS_ROOT}/public /app/public && bundle exec puma -C /config/puma.rb -p 3000
+          volumeMounts:
+            - mountPath: /app
+              name: app
+            - mountPath: /config
+              name: web-conf
+          resources:
+            requests:
+              memory: "1Gi"
+              cpu: "100m"
+            limits:
+              memory: "2Gi"
+          envFrom:
+            - configMapRef:
+                name: pixta-downloader-application-env
+            - secretRef:
+                name: pixta-downloader-secret

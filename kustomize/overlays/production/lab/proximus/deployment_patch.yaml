@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: proximus
+  labels:
+    app: proximus
+    stage: production
+  annotations:
+    kube-score/ignore: container-resources,container-image-tag,deployment-has-poddisruptionbudget,deployment-has-host-podantiaffinity,pod-probes
+spec:
+  selector:
+    matchLabels:
+      app: proximus
+      stage: production
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 10%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::045675425505:role/proximus_opswork_staging
+      labels:
+        app: proximus
+        stage: production
+    spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                  - key: eks.amazonaws.com/capacityType
+                    operator: In
+                    values:
+                      - ON_DEMAND
+              weight: 10
+      containers:
+        - name: proximus
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/proximus:cpu-2.0.3
+          envFrom:
+            - configMapRef:
+                name: proximus-common-env
+            - secretRef:
+                name: proximus-secret
+                optional: false

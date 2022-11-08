@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker-thumbnail
+  labels:
+    app: worker-thumbnail
+spec:
+  selector:
+    matchLabels:
+      app: worker-thumbnail
+  template:
+    metadata:
+      labels:
+        app: worker-thumbnail
+    spec:
+      containers:
+        - name: worker-thumbnail
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/worker-thumbnail:latest
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "2G"
+              cpu: "1"
+          envFrom:
+            - configMapRef:
+                name: worker-thumbnail-common-env
+            - secretRef:
+                name: worker-thumbnail-secret

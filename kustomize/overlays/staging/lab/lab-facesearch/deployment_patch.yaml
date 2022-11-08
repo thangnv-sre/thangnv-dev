@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lab-facesearch
+  labels:
+    app: lab-facesearch
+    stage: staging
+spec:
+  selector:
+    matchLabels:
+      app: lab-facesearch
+      stage: staging
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+      labels:
+        app: lab-facesearch
+        stage: staging
+    spec:
+      containers:
+        - name: lab-facesearch
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/lab-facesearch:1.0.3
+          envFrom:
+            - configMapRef:
+                name: lab-facesearch-conf

@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: checktool-delayed-job
+  labels:
+    app: checktool-delayed-job
+    stage: production
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: checktool-delayed-job
+      stage: production
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-production
+      labels:
+        app: checktool-delayed-job
+        stage: production
+    spec:
+      nodeSelector:
+        balance-spot-public-instance: "true"
+      tolerations:
+        - key: "balance-spot-public-instance"
+          operator: "Equal"
+          value: "true"
+          effect: "PreferNoSchedule"
+      containers:
+        - name: checktool-delayed-job
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pixta-check-tool:latest

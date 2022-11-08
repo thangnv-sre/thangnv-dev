@@ -1,0 +1,19 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: title-translation-scaledobject
+spec:
+  scaleTargetRef:
+    name: title-translation
+  # how frequently in seconds does KEDA poll Prometheus
+  pollingInterval: 10
+  cooldownPeriod: 15
+  minReplicaCount: 1
+  maxReplicaCount: 20
+  triggers:
+    - type: prometheus
+      metadata:
+        serverAddress: http://kubecost-prometheus-server.kubecost.svc.cluster.local
+        metricName: title_translation_ingress_requests
+        threshold: "10"
+        query: sum(rate(nginx_ingress_controller_requests{ingress=~"title-translation-ingress-internal"}[2m]))

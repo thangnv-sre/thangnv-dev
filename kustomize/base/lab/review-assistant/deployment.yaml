@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: review-assistant
+  labels:
+    app: review-assistant
+spec:
+  selector:
+    matchLabels:
+      app: review-assistant
+  template:
+    metadata:
+      labels:
+        app: review-assistant
+    spec:
+      # nodeSelector:
+      # nvidia.com/gpu: "true"
+      # lab-worker: "true"
+      # tolerations:
+      #   - key: "nvidia.com/gpu"
+      #     operator: "Equal"
+      #     value: "true"
+      #     effect: "NoSchedule"
+      volumes:
+        - name: ra-ckpt-vol-1
+          persistentVolumeClaim:
+            claimName: ra-ckpt-pvc-1
+      initContainers:
+        - name: init-ckpt
+          image: xueshanf/awscli:alpine-3.11
+          command:
+            [
+              "/bin/sh",
+              "-c",
+              "aws s3 sync --delete s3://machine-learning-storage-stg/ra/v1/ /tmp/ckpt/",
+            ]
+          volumeMounts:
+            - mountPath: /tmp/ckpt
+              name: ra-ckpt-vol-1
+      containers:
+        - name: review-assistant
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/lab-ra:v1.0.0
+          imagePullPolicy: Always
+          command: ["/bin/bash"]
+          args: ["-c", "python3 service.py"]
+          envFrom:
+            # - secretRef:
+            #     name: review-assistant-secret
+            - configMapRef:
+                name: review-assistant-application-env
+          volumeMounts:
+            - name: ra-ckpt-vol-1
+              mountPath: /pvn-review-assistant/checkpoint.bin
+              subPath: checkpoint.bin

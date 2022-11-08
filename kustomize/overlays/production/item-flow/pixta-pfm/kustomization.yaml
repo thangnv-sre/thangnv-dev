@@ -1,0 +1,17 @@
+bases:
+  - ../../../../base/item-flow/pixta-pfm
+resources:
+  - ingress.yaml
+  - secret.yaml
+  - pdb.yaml
+configMapGenerator:
+  - name: pfm-common-env
+    behavior: merge
+    literals:
+      - RAILS_ENV=production
+patchesStrategicMerge:
+  - deployment_patch.yaml
+  - cronjob_patch.yaml
+  - delayed_job_patch.yaml
+  - polling_patch.yaml
+  - service_patch.yaml

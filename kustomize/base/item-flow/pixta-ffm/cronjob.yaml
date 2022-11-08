@@ -1,0 +1,259 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: ffm-new-cronjob
+  labels:
+    app: ffm-new-cronjob
+spec:
+  schedule: "50 * * * *"
+  concurrencyPolicy: "Forbid"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: ffm-new-cronjob
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: ffm-new-job
+              image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/ffm_app:latest
+              imagePullPolicy: Always
+              command:
+                [
+                  "bash",
+                  "-c",
+                  "bin/rails runner 'Batch::RequestManagerBatch.new(Footage::STATUS_NEW).run'",
+                ]
+              envFrom:
+                - secretRef:
+                    name: ffm-secret
+              resources:
+                requests:
+                  memory: "500Mi"
+                  cpu: "200m"
+                limits:
+                  memory: "500Mi"
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: ffm-tag-cronjob
+  labels:
+    app: ffm-tag-cronjob
+spec:
+  schedule: "10 * * * *"
+  concurrencyPolicy: "Forbid"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: ffm-tag-cronjob
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: ffm-tag-job
+              image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/ffm_app:latest
+              imagePullPolicy: Always
+              command:
+                [
+                  "bash",
+                  "-c",
+                  "bin/rails runner 'Batch::RequestManagerBatch.new(Footage::STATUS_TAG).run'",
+                ]
+              envFrom:
+                - secretRef:
+                    name: ffm-secret
+              resources:
+                requests:
+                  memory: "500Mi"
+                  cpu: "200m"
+                limits:
+                  memory: "500Mi"
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: ffm-resize-cronjob
+  labels:
+    app: ffm-resize-cronjob
+spec:
+  schedule: "20 * * * *"
+  concurrencyPolicy: "Forbid"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: ffm-resize-cronjob
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: ffm-resize-job
+              image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/ffm_app:latest
+              imagePullPolicy: Always
+              command:
+                [
+                  "bash",
+                  "-c",
+                  "bin/rails runner 'Batch::RequestManagerBatch.new(Footage::STATUS_RESIZE).run'",
+                ]
+              envFrom:
+                - secretRef:
+                    name: ffm-secret
+              resources:
+                requests:
+                  memory: "500Mi"
+                  cpu: "200m"
+                limits:
+                  memory: "500Mi"
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: ffm-review-ok-cronjob
+  labels:
+    app: ffm-review-ok-cronjob
+spec:
+  schedule: "30 * * * *"
+  concurrencyPolicy: "Forbid"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: ffm-review-ok-cronjob
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: ffm-review-ok-job
+              image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/ffm_app:latest
+              imagePullPolicy: Always
+              command:
+                [
+                  "bash",
+                  "-c",
+                  "bin/rails runner 'Batch::RequestManagerBatch.new(Footage::STATUS_REVIEWED_OK).run'",
+                ]
+              envFrom:
+                - secretRef:
+                    name: ffm-secret
+              resources:
+                requests:
+                  memory: "500Mi"
+                  cpu: "200m"
+                limits:
+                  memory: "500Mi"
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: ffm-update-result-cronjob
+  labels:
+    app: ffm-update-result-cronjob
+spec:
+  schedule: "40 * * * *"
+  concurrencyPolicy: "Forbid"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: ffm-update-result-cronjob
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: ffm-update-result-job
+              image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/ffm_app:latest
+              imagePullPolicy: Always
+              command:
+                [
+                  "bash",
+                  "-c",
+                  "bin/rails runner 'Batch::UpdateResultForPixtaMain.new.run'",
+                ]
+              envFrom:
+                - secretRef:
+                    name: ffm-secret
+              resources:
+                requests:
+                  memory: "500Mi"
+                  cpu: "200m"
+                limits:
+                  memory: "500Mi"
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: ffm-request-check-tag-cronjob
+  labels:
+    app: ffm-request-check-tag-cronjob
+spec:
+  schedule: "30 * * * *"
+  concurrencyPolicy: "Forbid"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: ffm-request-check-tag-cronjob
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: ffm-request-check-tag-job
+              image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/ffm_app:latest
+              imagePullPolicy: Always
+              command:
+                [
+                  "bash",
+                  "-c",
+                  "bin/rails runner 'Batch::RequestManagerBatch.new(Footage::STATUS_SALE).run'",
+                ]
+              envFrom:
+                - secretRef:
+                    name: ffm-secret
+              resources:
+                requests:
+                  memory: "500Mi"
+                  cpu: "200m"
+                limits:
+                  memory: "500Mi"
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: ffm-abort-check-cronjob
+  labels:
+    app: ffm-abort-check-cronjob
+spec:
+  schedule: "0 * * * *"
+  concurrencyPolicy: "Forbid"
+  suspend: false
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: ffm-abort-check-cronjob
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: ffm-abort-check-job
+              image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/ffm_app:latest
+              imagePullPolicy: Always
+              command:
+                [
+                  "bash",
+                  "-c",
+                  "bin/rails runner 'Batch::RequestManagerBatch.new(Footage::STATUS_PRE_ABORT).run'",
+                ]
+              envFrom:
+                - secretRef:
+                    name: ffm-secret
+              resources:
+                requests:
+                  memory: "500Mi"
+                  cpu: "200m"
+                limits:
+                  memory: "700Mi"

@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-dictionaries
+  labels:
+    app: simple-dictionaries
+    stage: production
+  annotations:
+    kube-score/ignore: pod-probes
+spec:
+  selector:
+    matchLabels:
+      app: simple-dictionaries
+      stage: production
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 10%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: simple-dictionaries
+        stage: production
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::567351176096:role/pixtavietnam-production
+    spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                  - key: eks.amazonaws.com/capacityType
+                    operator: In
+                    values:
+                      - ON_DEMAND
+              weight: 10
+      initContainers:
+        - name: simple-dictionaries-app
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/simple-dictionaries:production
+          resources:
+            limits:
+              memory: 35Mi
+            requests:
+              cpu: 5m
+              memory: 20Mi
+      containers:
+        - name: simple-dictionaries-nginx
+          envFrom:
+            - configMapRef:
+                name: simple-dictionaries-nginx-env
+          resources:
+            limits:
+              memory: 70Mi
+            requests:
+              cpu: 5m
+              memory: 35Mi

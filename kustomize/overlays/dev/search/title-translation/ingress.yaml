@@ -1,0 +1,14 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: title-translation-ingress-external
+  annotations:
+    kubernetes.io/ingress.class: nginx-external
+spec:
+  rules:
+    - host: staging-title-translation-service.pixtastock.com
+      http:
+        paths:
+          - backend:
+              serviceName: title-translation-svc
+              servicePort: 80

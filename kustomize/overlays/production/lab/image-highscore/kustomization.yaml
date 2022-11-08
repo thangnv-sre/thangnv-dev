@@ -1,0 +1,14 @@
+bases:
+  - ../../../../base/lab/image-highscore
+resources:
+  # - wpa.yaml
+  - scaledobject.yaml
+configMapGenerator:
+  - name: image-highscore-common-env
+    behavior: merge
+    literals:
+      - env=prod
+      - output_sqs_url=https://sqs.ap-northeast-1.amazonaws.com/045675425505/response_check_high_score_tag_prod
+      - input_sqs_url=https://sqs.ap-northeast-1.amazonaws.com/045675425505/request_check_high_score_tag_prod
+patchesStrategicMerge:
+  - deployment_patch.yaml

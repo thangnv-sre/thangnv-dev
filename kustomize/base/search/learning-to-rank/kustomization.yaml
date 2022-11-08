@@ -1,0 +1,16 @@
+resources:
+  - cronjob.yaml
+configMapGenerator:
+  - name: ltr-common-env
+    literals:
+      - AWS_REGION=ap-northeast-1
+  - name: ltr-online-learning-common-env
+    literals:
+      - PYTHONUNBUFFERED=1
+      - INCREAMENTAL_LEARNING_S3_BUCKET=incremental-learning-prod
+      - MODEL_NAME=default
+      - EVALUATION_MODEL_NAME=""
+      - CURRENT_MODEL_NAME=""
+      - ROLEARN=""
+generatorOptions:
+  disableNameSuffixHash: true

@@ -1,0 +1,12 @@
+bases:
+  - ../../../../base/item-flow/worker-png
+resources:
+  - secret.yaml
+  - scaledobject.yaml
+configMapGenerator:
+  - name: worker-png-common-env
+    behavior: merge
+    literals:
+      - RAILS_ENV=production
+patchesStrategicMerge:
+  - deployment_patch.yaml

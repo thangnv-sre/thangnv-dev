@@ -1,0 +1,17 @@
+bases:
+  - ../../../../base/lab/review-assistant
+# resources:
+  # - secret.yaml
+  # - scaledobject.yaml
+configMapGenerator:
+  - name: review-assistant-application-env
+    literals:
+      - env=staging
+      - s3_prod_bucket_name="machine-learning-storage-stg"
+      - input_sqs_url="https://sqs.ap-northeast-1.amazonaws.com/045675425505/lab-review-assistant-request-staging"
+      - output_sqs_url="https://sqs.ap-northeast-1.amazonaws.com/045675425505/lab-review-assistant-response-staging"
+generatorOptions:
+  disableNameSuffixHash: false
+patchesStrategicMerge:
+  - deployment_patch.yaml
+

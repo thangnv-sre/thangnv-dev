@@ -1,0 +1,14 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: sendmail-ingress-external
+  annotations:
+    kubernetes.io/ingress.class: nginx-external
+spec:
+  rules:
+    - host: sendmail.pixtastock.com
+      http:
+        paths:
+          - backend:
+              serviceName: sendmail-svc
+              servicePort: 80

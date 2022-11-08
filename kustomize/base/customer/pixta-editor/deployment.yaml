@@ -1,0 +1,179 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: editor
+  labels:
+    app: editor
+spec:
+  selector:
+    matchLabels:
+      app: editor
+  template:
+    metadata:
+      labels:
+        app: editor
+    spec:
+      initContainers:
+        - name: init-editor
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/editor-api:latest
+          imagePullPolicy: Always
+          command: ["/bin/sh", "-c", "cp -R /usr/src/editor-api/* /tmp/"]
+          volumeMounts:
+            - mountPath: /tmp
+              name: editor-api-volume
+      containers:
+        - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/nginx:stable
+          name: nginx
+          livenessProbe:
+            failureThreshold: 5
+            httpGet:
+              path: /healthz
+              port: 80
+            initialDelaySeconds: 30
+            timeoutSeconds: 30
+            periodSeconds: 30
+            successThreshold: 1
+          readinessProbe:
+            failureThreshold: 5
+            httpGet:
+              path: /healthz
+              port: 80
+            initialDelaySeconds: 30
+            timeoutSeconds: 30
+            periodSeconds: 30
+            successThreshold: 1
+          envFrom:
+            - configMapRef:
+                name: editor-common-env
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 5m
+              memory: 30Mi
+            limits:
+              memory: 60Mi
+          volumeMounts:
+            - mountPath: /config/nginx.conf
+              name: nginx-conf
+              subPath: nginx.conf
+            - mountPath: /usr/src/editor-api
+              name: editor-api-volume
+              readOnly: false
+            - mountPath: /config/editor-api.conf #/etc/nginx/sites-enabled/
+              name: site-conf
+              subPath: editor-api.conf
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - sh
+                  - -c
+                  - cp -pf /config/nginx.conf /etc/nginx/nginx.conf && mkdir -p /etc/nginx/sites-enabled  && envsubst '$RAILS_ROOT' < /config/editor-api.conf > /etc/nginx/sites-enabled/editor-api.conf && nginx -s reload
+            preStop:
+              exec:
+                command:
+                  - /usr/sbin/nginx
+                  - -s
+                  - quit
+        - name: editor
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/editor-api:latest
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "1Gi"
+              cpu: "60m"
+            limits:
+              cpu: "120m"
+              memory: "2Gi"
+          volumeMounts:
+            - mountPath: /usr/src/editor-api
+              name: editor-api-volume
+          envFrom:
+            - configMapRef:
+                name: editor-common-env
+            - secretRef:
+                name: editor-secret
+      volumes:
+        - name: editor-api-volume
+          emptyDir: {}
+        - configMap:
+            items:
+              - key: nginx.conf
+                path: nginx.conf
+            name: editor-nginx-conf
+          name: nginx-conf
+        - configMap:
+            items:
+              - key: editor-api.conf
+                path: editor-api.conf
+            name: editor-nginx-conf
+          name: site-conf
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: editor-frontend
+  labels:
+    app: editor-frontend
+spec:
+  selector:
+    matchLabels:
+      app: editor-frontend
+  template:
+    metadata:
+      labels:
+        app: editor-frontend
+    spec:
+      containers:
+        - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/editor-frontend:latest
+          name: editor-nginx
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+            limits:
+              memory: 200Mi
+          envFrom:
+            - configMapRef:
+                name: editor-frontend-common-env
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /config/nginx.conf
+              name: nginx-conf
+              subPath: nginx.conf
+            - mountPath: /config/editor.conf #/etc/nginx/sites-enabled/
+              name: site-conf
+              subPath: editor.conf
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - sh
+                  - -c
+                  - cp -pf /config/nginx.conf /etc/nginx/nginx.conf && mkdir -p /etc/nginx/sites-enabled  && envsubst '$NODE_ROOT' < /config/editor.conf > /etc/nginx/sites-enabled/editor.conf && nginx -s reload
+            preStop:
+              exec:
+                command:
+                  - /usr/sbin/nginx
+                  - -s
+                  - quit
+      volumes:
+        - configMap:
+            items:
+              - key: nginx.conf
+                path: nginx.conf
+            name: editor-frontend-nginx-conf
+          name: nginx-conf
+        - configMap:
+            items:
+              - key: editor.conf
+                path: editor.conf
+            name: editor-frontend-nginx-conf
+          name: site-conf

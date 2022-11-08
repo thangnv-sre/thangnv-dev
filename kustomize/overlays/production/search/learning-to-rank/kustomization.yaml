@@ -1,0 +1,16 @@
+bases:
+  - ../../../../base/search/learning-to-rank
+resources:
+  - secret.yaml
+  - rbac.yaml
+configMapGenerator:
+  - name: ltr-common-env
+    behavior: merge
+    literals:
+      - WORKER_ENV=production
+  - name: ltr-online-learning-common-env
+    behavior: merge
+    literals:
+      - INCREAMENTAL_LEARNING_S3_BUCKET=incremental-learning-prod
+patchesStrategicMerge:
+  - cronjob_patch.yaml

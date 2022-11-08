@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pngfm
+  labels:
+    app: pngfm
+    stage: production
+  annotations:
+    kube-score/ignore: pod-probes
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: pngfm
+      stage: production
+  strategy:
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-production
+      labels:
+        app: pngfm
+        stage: production
+    spec:
+      containers:
+        - name: pngfm-app
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/png-flow-manager:production
+

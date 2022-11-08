@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker-eps-to-png
+  labels:
+    app: worker-eps-to-png
+spec:
+  selector:
+    matchLabels:
+      app: worker-eps-to-png
+  template:
+    metadata:
+      labels:
+        app: worker-eps-to-png
+    spec:
+      tolerations:
+        - key: "spotInstance"
+          operator: "Equal"
+          value: "true"
+          effect: "PreferNoSchedule"
+      containers:
+        - name: worker-eps-to-png
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/eps-to-png-worker:latest
+          envFrom:
+            - configMapRef:
+                name: worker-eps-to-png-common-env
+            - secretRef:
+                name: worker-eps-to-png-secret
+          resources:
+            requests:
+              memory: "6Gi"
+              cpu: "3"

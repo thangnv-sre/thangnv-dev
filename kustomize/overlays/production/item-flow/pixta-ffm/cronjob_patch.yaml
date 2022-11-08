@@ -1,0 +1,187 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: ffm-new-cronjob
+  labels:
+    app: ffm-new-cronjob
+    stage: production
+spec:
+  schedule: "0 * * * *"
+  startingDeadlineSeconds: 180
+  concurrencyPolicy: "Forbid"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-production
+          labels:
+            app: ffm-new-cronjob
+            stage: production
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: ffm-new-job
+              image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/ffm_app:prod-4d6b35f
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: ffm-tag-cronjob
+  labels:
+    app: ffm-tag-cronjob
+    stage: production
+spec:
+  schedule: "0 * * * *"
+  startingDeadlineSeconds: 180
+  concurrencyPolicy: "Forbid"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-production
+          labels:
+            app: ffm-tag-cronjob
+            stage: production
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: ffm-tag-job
+              image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/ffm_app:prod-4d6b35f
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: ffm-resize-cronjob
+  labels:
+    app: ffm-resize-cronjob
+    stage: production
+spec:
+  schedule: "0 * * * *"
+  startingDeadlineSeconds: 180
+  concurrencyPolicy: "Forbid"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-production
+          labels:
+            app: ffm-resize-cronjob
+            stage: production
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: ffm-resize-job
+              image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/ffm_app:prod-4d6b35f
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: ffm-review-ok-cronjob
+  labels:
+    app: ffm-review-ok-cronjob
+    stage: production
+spec:
+  schedule: "0 * * * *"
+  startingDeadlineSeconds: 180
+  concurrencyPolicy: "Forbid"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-production
+          labels:
+            app: ffm-review-ok-cronjob
+            stage: production
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: ffm-review-ok-job
+              image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/ffm_app:prod-4d6b35f
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: ffm-update-result-cronjob
+  labels:
+    app: ffm-update-result-cronjob
+    stage: production
+spec:
+  schedule: "0 * * * *"
+  startingDeadlineSeconds: 180
+  concurrencyPolicy: "Forbid"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-production
+          labels:
+            app: ffm-update-result-cronjob
+            stage: production
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: ffm-update-result-job
+              image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/ffm_app:prod-4d6b35f
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: ffm-request-check-tag-cronjob
+  labels:
+    app: ffm-request-check-tag-cronjob
+    stage: production
+spec:
+  schedule: "0 * * * *"
+  startingDeadlineSeconds: 180
+  concurrencyPolicy: "Forbid"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-production
+          labels:
+            app: ffm-request-check-tag-cronjob
+            stage: production
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: ffm-request-check-tag-job
+              image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/ffm_app:prod-4d6b35f
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: ffm-abort-check-cronjob
+  labels:
+    app: ffm-abort-check-cronjob
+    stage: production
+spec:
+  schedule: "0 * * * *"
+  startingDeadlineSeconds: 180
+  concurrencyPolicy: "Forbid"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-production
+          labels:
+            app: ffm-abort-check-cronjob
+            stage: production
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: ffm-abort-check-job
+              image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/ffm_app:prod-4d6b35f

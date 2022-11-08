@@ -1,0 +1,23 @@
+bases:
+  - ../../../../base/contributor/footage-resize
+resources:
+  - secret.yaml
+configMapGenerator:
+  - name: footage-resize-common-env
+    behavior: merge
+    literals:
+      - RESIZE_ENV=staging
+      - ELASTICSEARCH_HOST=69f5eb35e87a412db1391cb96cf8558c.ap-northeast-1.aws.found.io
+      - ELASTICSEARCH_PORT=9243
+      - ELASTICSEARCH_USER=user_index
+      - ELASTICSEARCH_PASS=123456
+  - name: footage-resize-on-submit-common-env
+    behavior: merge
+    literals:
+      - RESIZE_ENV=staging
+      - ELASTICSEARCH_HOST=69f5eb35e87a412db1391cb96cf8558c.ap-northeast-1.aws.found.io
+      - ELASTICSEARCH_PORT=9243
+      - ELASTICSEARCH_USER=user_index
+      - ELASTICSEARCH_PASS=123456
+patchesStrategicMerge:
+  - deployment_patch.yaml

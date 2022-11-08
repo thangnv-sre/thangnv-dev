@@ -1,0 +1,13 @@
+bases:
+  - ../../../../base/contributor/footage-resize
+resources:
+  - scaledobject.yaml
+  - secret.yaml
+  # - wpa.yaml
+configMapGenerator:
+  - name: footage-resize-common-env
+    behavior: merge
+    literals:
+      - RESIZE_ENV=production
+patchesStrategicMerge:
+  - deployment_patch.yaml

@@ -1,0 +1,56 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    fluxcd.io/automated: "false"
+    fluxcd.io/tag.init-data: glob:alpine-3.11
+    fluxcd.io/tag.init-models: glob:alpine-3.11
+    fluxcd.io/tag.lab-pcc: semver:~3
+  name: lab-pcc
+  namespace: stg-lab
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: lab-pcc
+      $setElementOrder/initContainers:
+      - name: init-data
+      - name: init-models
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/lab-pcc:v3.5.6
+        name: lab-pcc
+      initContainers:
+      - image: xueshanf/awscli:alpine-3.11
+        name: init-data
+      - image: xueshanf/awscli:alpine-3.11
+        name: init-models
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    fluxcd.io/automated: "false"
+    fluxcd.io/tag.nginx: glob:stable
+    fluxcd.io/tag.tag-suggestion: semver:~2
+  name: tag-suggestion
+  namespace: stg-lab
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: nginx
+      - name: tag-suggestion
+      $setElementOrder/initContainers:
+      - name: init-ckpt
+      - name: init-classes
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/nginx:stable
+        name: nginx
+      # - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/lab-tag-suggestion-mlc:v2.2.2
+      #   name: tag-suggestion
+      initContainers:
+      - image: xueshanf/awscli:alpine-3.11
+        name: init-ckpt
+      - image: xueshanf/awscli:alpine-3.11
+        name: init-classes

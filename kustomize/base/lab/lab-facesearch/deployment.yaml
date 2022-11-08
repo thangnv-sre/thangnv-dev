@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lab-facesearch
+  labels:
+    app: lab-facesearch
+spec:
+  selector:
+    matchLabels:
+      app: lab-facesearch
+  template:
+    metadata:
+      labels:
+        app: lab-facesearch
+    spec:
+      tolerations:
+        - key: "spotInstance"
+          operator: "Equal"
+          value: "true"
+          effect: "PreferNoSchedule"
+      volumes:
+        - name: facesearch-ckpts-vol
+          persistentVolumeClaim:
+            claimName: facesearch-ckpts-pvc
+      initContainers:
+        - name: init-ckpts
+          image: xueshanf/awscli:latest
+          command:
+            [
+              "/bin/sh",
+              "-c",
+              "aws s3 --delete sync s3://machine-learning-storage-stg/facesearch-age-emotion/ckpt_onnx/ /tmp/ckpts/",
+            ]
+          volumeMounts:
+            - mountPath: /tmp/ckpts
+              name: facesearch-ckpts-vol
+      containers:
+        - name: lab-facesearch
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/lab-facesearch:1.0.3
+          imagePullPolicy: Always
+          command:
+            - "python3"
+            #- /bin/bash
+          args:
+            #- -U
+            - "service.py"
+            #- -c
+            #- sleep 36000
+          resources:
+            requests:
+              memory: "1.2Gi"
+              cpu: "785m"
+            limits:
+              memory: "2Gi"
+              cpu: "1570m"
+          workingDir: /model_facesearch
+          volumeMounts:
+            - name: facesearch-ckpts-vol
+              mountPath: /model_facesearch/ckpt_context_aware.bin
+              subPath: ckpt_context_aware.bin
+            - name: facesearch-ckpts-vol
+              mountPath: /model_facesearch/ckpt_retinaface.bin
+              subPath: ckpt_retinaface.bin
+

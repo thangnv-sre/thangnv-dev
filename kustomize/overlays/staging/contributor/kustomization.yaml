@@ -1,0 +1,4 @@
+namespace: stg-contributor
+bases:
+  - footage-resize
+  - footage-resize-ondemand

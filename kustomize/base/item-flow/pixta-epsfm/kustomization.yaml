@@ -1,0 +1,19 @@
+resources:
+  - deployment.yaml
+  - service.yaml
+  - delayed_job.yaml
+  - cronjob.yaml
+  - polling.yaml
+configMapGenerator:
+  - name: epsfm-common-env
+    literals:
+      - RAILS_ROOT=/var/www/eps-flow-manager
+  - name: epsfm-nginx-conf
+    files:
+      - configmap/nginx.conf
+      - configmap/pixta-epsfm.conf
+  - name: epsfm-puma-rb
+    files:
+      - configmap/puma.rb
+generatorOptions:
+  disableNameSuffixHash: true

@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: check-tool-web-svc
+  labels:
+    app: check-tool-web
+spec:
+  selector:
+    app: check-tool-web
+    stage: staging
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: check-tool-downloader-svc
+spec:
+  selector:
+    app: check-tool-downloader
+    stage: staging

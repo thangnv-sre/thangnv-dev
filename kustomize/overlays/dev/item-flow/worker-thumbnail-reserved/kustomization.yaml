@@ -1,0 +1,13 @@
+bases:
+  - ../../../../base/item-flow/worker-thumbnail-reserved
+resources:
+  # - hpa.yaml
+  - secret.yaml
+  # - scaledobject.yaml
+configMapGenerator:
+  - name: worker-thumbnail-reserved-common-env
+    behavior: merge
+    literals:
+      - RAILS_ENV=staging
+patchesStrategicMerge:
+  - deployment_patch.yaml

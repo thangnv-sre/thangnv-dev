@@ -1,0 +1,19 @@
+resources:
+  - deployment.yaml
+  - service.yaml
+  - delayed_job.yaml
+  - cronjob.yaml
+  - polling.yaml
+configMapGenerator:
+  - name: pngfm-common-env
+    literals:
+      - RAILS_ROOT=/var/www/png-flow-manager
+  - name: pngfm-nginx-conf
+    files:
+      - configmap/nginx.conf
+      - configmap/pixta-pngfm.conf
+  - name: pngfm-puma-rb
+    files:
+      - configmap/puma.rb
+generatorOptions:
+  disableNameSuffixHash: true

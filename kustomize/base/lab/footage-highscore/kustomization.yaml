@@ -1,0 +1,9 @@
+resources:
+  - deployment.yaml
+  - pvc.yaml
+configMapGenerator:
+  - name: footage-highscore-common-env
+    literals:
+      - s3_prod_bucket_name=pixta-footage-thumb-jp
+generatorOptions:
+  disableNameSuffixHash: true

@@ -1,0 +1,45 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: pixta-job-post-chatwork
+  labels:
+    app: pixta-job-post-chatwork
+    stage: production
+spec:
+  concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-production
+          labels:
+            app: pixta-job-post-chatwork
+            stage: production
+        spec:
+          containers:
+          - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/editor-api:production
+            name: job-post-chatwork
+            resources:
+              requests:
+                memory: "43Mi"
+                cpu: "30m"
+              limits:
+                memory: "86Mi"
+  schedule: "5 0 * * *"
+  startingDeadlineSeconds: 3600
+  successfulJobsHistoryLimit: 3
+  suspend: true
+# ---
+# apiVersion: batch/v1beta1
+# kind: CronJob
+# metadata:
+#   name: pixta-job-update-editor-data
+#   labels:
+#     app: pixta-job-update-editor-data
+#   annotations:
+#     kube-score/ignore: container-resources
+# spec:
+#   suspend: true

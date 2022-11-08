@@ -1,0 +1,12 @@
+resources:
+  - deployment.yaml
+  - service.yaml
+configMapGenerator:
+  - name: title-translation-common-env
+    literals:
+      - AWS_REGION=ap-northeast-1
+  - name: title-translation-nginx-conf
+    files:
+      - configmap/nginx.conf
+generatorOptions:
+  disableNameSuffixHash: true

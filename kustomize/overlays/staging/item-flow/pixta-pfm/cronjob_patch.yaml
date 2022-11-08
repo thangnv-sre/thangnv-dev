@@ -1,0 +1,180 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: pfm-new-cronjob
+  labels:
+    app: pfm-new-cronjob
+    stage: staging
+spec:
+  suspend: true
+  schedule: "*/2 * * * *"
+  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 180
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+          labels:
+            app: pfm-new-cronjob
+            stage: staging
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: pfm-tag-cronjob
+  labels:
+    app: pfm-tag-cronjob
+    stage: staging
+spec:
+  schedule: "*/3 * * * *"
+  concurrencyPolicy: Forbid
+  suspend: true
+  startingDeadlineSeconds: 180
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+          labels:
+            app: pfm-tag-cronjob
+            stage: staging
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: pfm-thumbnail-cronjob
+  labels:
+    app: pfm-thumbnail-cronjob
+    stage: staging
+spec:
+  schedule: "*/4 * * * *"
+  concurrencyPolicy: Forbid
+  suspend: true
+  startingDeadlineSeconds: 180
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+          labels:
+            app: pfm-thumbnail-cronjob
+            stage: staging
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: pfm-ra-cronjob
+  labels:
+    app: pfm-ra-cronjob
+    stage: staging
+spec:
+  schedule: "*/6 * * * *"
+  concurrencyPolicy: Forbid
+  suspend: true
+  startingDeadlineSeconds: 180
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+          labels:
+            app: pfm-ra-cronjob
+            stage: staging
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: pfm-review-ok-cronjob
+  labels:
+    app: pfm-review-ok-cronjob
+    stage: staging
+spec:
+  schedule: "*/5 * * * *"
+  concurrencyPolicy: Forbid
+  suspend: true
+  startingDeadlineSeconds: 180
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+          labels:
+            app: pfm-review-ok-cronjob
+            stage: staging
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: pfm-abort-cronjob
+  labels:
+    app: pfm-abort-cronjob
+    stage: staging
+spec:
+  schedule: "*/3 * * * *"
+  concurrencyPolicy: Forbid
+  suspend: true
+  startingDeadlineSeconds: 180
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+          labels:
+            app: pfm-abort-cronjob
+            stage: staging
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: pfm-update-result-cronjob
+  labels:
+    app: pfm-update-result-cronjob
+    stage: staging
+spec:
+  schedule: "*/2 * * * *"
+  concurrencyPolicy: Forbid
+  suspend: true
+  startingDeadlineSeconds: 180
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+          labels:
+            app: pfm-update-result-cronjob
+            stage: staging
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: pfm-request-check-tag-cronjob
+  labels:
+    app: pfm-request-check-tag-cronjob
+    stage: staging
+spec:
+  schedule: "*/2 * * * *"
+  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 180
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+          labels:
+            app: pfm-request-check-tag-cronjob
+            stage: staging

@@ -1,0 +1,199 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ffm-checktool-result-poller
+  labels:
+    app: ffm-checktool-result-poller
+spec:
+  selector:
+    matchLabels:
+      app: ffm-checktool-result-poller
+  template:
+    metadata:
+      labels:
+        app: ffm-checktool-result-poller
+    spec:
+      nodeSelector:
+        balance-spot-public-instance: "true"
+      tolerations:
+        - key: "balance-spot-public-instance"
+          operator: "Equal"
+          value: "true"
+          effect: "PreferNoSchedule"
+      containers:
+        - name: ffm-checktool-result-poller
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/ffm_app:latest
+          imagePullPolicy: Always
+          command:
+            [
+              "bash",
+              "-c",
+              "bin/rails runner 'Batch::ResponseBatches::ChecktoolResult.new.run'",
+            ]
+          envFrom:
+            - secretRef:
+                name: ffm-secret
+          resources:
+            requests:
+              memory: "200Mi"
+              cpu: "50m"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ffm-footage-resize-poller
+  labels:
+    app: ffm-footage-resize-poller
+spec:
+  selector:
+    matchLabels:
+      app: ffm-footage-resize-poller
+  template:
+    metadata:
+      labels:
+        app: ffm-footage-resize-poller
+    spec:
+      nodeSelector:
+        balance-spot-public-instance: "true"
+      tolerations:
+        - key: "balance-spot-public-instance"
+          operator: "Equal"
+          value: "true"
+          effect: "PreferNoSchedule"
+      containers:
+        - name: ffm-footage-resize-poller
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/ffm_app:latest
+          imagePullPolicy: Always
+          command:
+            [
+              "bash",
+              "-c",
+              "bin/rails runner 'Batch::ResponseBatches::GetFootageResizeResult.new.run'",
+            ]
+          envFrom:
+            - secretRef:
+                name: ffm-secret
+          resources:
+            requests:
+              memory: "200Mi"
+              cpu: "50m"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ffm-tag-poller
+  labels:
+    app: ffm-tag-poller
+spec:
+  selector:
+    matchLabels:
+      app: ffm-tag-poller
+  template:
+    metadata:
+      labels:
+        app: ffm-tag-poller
+    spec:
+      nodeSelector:
+        balance-spot-public-instance: "true"
+      tolerations:
+        - key: "balance-spot-public-instance"
+          operator: "Equal"
+          value: "true"
+          effect: "PreferNoSchedule"
+      containers:
+        - name: ffm-tag-poller
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/ffm_app:latest
+          imagePullPolicy: Always
+          command:
+            [
+              "bash",
+              "-c",
+              "bin/rails runner 'Batch::ResponseBatches::Tag.new.run'",
+            ]
+          envFrom:
+            - secretRef:
+                name: ffm-secret
+          resources:
+            requests:
+              memory: "200Mi"
+              cpu: "50m"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ffm-checktool-start-poller
+  labels:
+    app: ffm-checktool-start-poller
+spec:
+  selector:
+    matchLabels:
+      app: ffm-checktool-start-poller
+  template:
+    metadata:
+      labels:
+        app: ffm-checktool-start-poller
+    spec:
+      nodeSelector:
+        balance-spot-public-instance: "true"
+      tolerations:
+        - key: "balance-spot-public-instance"
+          operator: "Equal"
+          value: "true"
+          effect: "PreferNoSchedule"
+      containers:
+        - name: ffm-checktool-start-poller
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/ffm_app:latest
+          imagePullPolicy: Always
+          command:
+            [
+              "bash",
+              "-c",
+              "bin/rails runner 'Batch::ResponseBatches::ChecktoolStartCheck.new.run'",
+            ]
+          envFrom:
+            - secretRef:
+                name: ffm-secret
+          resources:
+            requests:
+              memory: "200Mi"
+              cpu: "50m"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ffm-auto-tag-result-poller
+  labels:
+    app: ffm-auto-tag-result-poller
+spec:
+  selector:
+    matchLabels:
+      app: ffm-auto-tag-result-poller
+  template:
+    metadata:
+      labels:
+        app: ffm-auto-tag-result-poller
+    spec:
+      nodeSelector:
+        balance-spot-public-instance: "true"
+      tolerations:
+        - key: "balance-spot-public-instance"
+          operator: "Equal"
+          value: "true"
+          effect: "PreferNoSchedule"
+      containers:
+        - name: ffm-auto-tag-result-poller
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/ffm_app:latest
+          imagePullPolicy: Always
+          command:
+            [
+              "bash",
+              "-c",
+              "bin/rails runner 'Batch::ResponseBatches::AutoCheckTagResult.new.run'",
+            ]
+          envFrom:
+            - secretRef:
+                name: ffm-secret
+          resources:
+            requests:
+              memory: "200Mi"
+              cpu: "50m"

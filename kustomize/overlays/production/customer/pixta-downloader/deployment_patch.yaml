@@ -1,0 +1,90 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pixta-downloader
+  labels:
+    app: pixta-downloader
+    stage: production
+  annotations:
+    kube-score/ignore: container-resources,pod-probes
+spec:
+  selector:
+    matchLabels:
+      app: pixta-downloader
+      stage: production
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 10%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: pixta-downloader
+        stage: production
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::567351176096:role/pixta-downloader
+    spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                  - key: eks.amazonaws.com/capacityType
+                    operator: In
+                    values:
+                      - ON_DEMAND
+              weight: 10
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - pixta-downloader
+              topologyKey: kubernetes.io/hostname
+      tolerations:
+        - key: "medium-cpu-ondemand-instance"
+          operator: "Equal"
+          value: "true"
+          effect: "PreferNoSchedule"
+      containers:
+        - name: pixta-downloader-nginx
+          readinessProbe:
+            failureThreshold: 5
+            httpGet:
+              httpHeaders:
+                - name: Authorization
+                  value: Basic cGl4dGEtZG93bmxvYWRlcjpKIXNNQGgqSDdEbyFAQQ==
+              path: /health_checks/all
+              port: 80
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 30
+          livenessProbe:
+            failureThreshold: 5
+            httpGet:
+              httpHeaders:
+                - name: Authorization
+                  value: Basic cGl4dGEtZG93bmxvYWRlcjpKIXNNQGgqSDdEbyFAQQ==
+              path: /health_checks/all
+              port: 80
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 30
+          envFrom:
+            - configMapRef:
+                name: pixta-downloader-nginx-env
+        - name: pixta-downloader-app
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pixta-downloader:production
+          resources:
+            requests:
+              memory: 1G
+              cpu: 35m
+            limits:
+              memory: 2G

@@ -1,0 +1,15 @@
+bases:
+  - ../../../../base/item-flow/worker-eps-to-png
+resources:
+  - secret.yaml
+#  - scaledobject.yaml
+configMapGenerator:
+  - name: worker-eps-to-png-common-env
+    behavior: merge
+    literals:
+    - RAILS_ENV=staging
+    - REQUEST_QUEUE=https://sqs.ap-northeast-1.amazonaws.com/045675425505/worker_eps_to_png_request_stg
+    - RESPONSE_QUEUE=https://sqs.ap-northeast-1.amazonaws.com/045675425505/worker_eps_to_png_result_stg
+patchesStrategicMerge:
+  - deployment_patch.yaml
+

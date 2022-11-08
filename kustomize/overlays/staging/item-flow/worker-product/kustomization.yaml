@@ -1,0 +1,12 @@
+bases:
+  - ../../../../base/item-flow/worker-product
+resources:
+  # - scaledobject.yaml
+  - secret.yaml
+configMapGenerator:
+  - name: worker-product-common-env
+    behavior: merge
+    literals:
+      - RAILS_ENV=staging
+patchesStrategicMerge:
+  - deployment_patch.yaml

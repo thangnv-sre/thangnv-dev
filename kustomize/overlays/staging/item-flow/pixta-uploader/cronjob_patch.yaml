@@ -1,0 +1,39 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: pixta-uploader-sqs2s3-cronjob
+  labels:
+    app: pixta-uploader-sqs2s3-cronjob
+    stage: staging
+spec:
+  schedule: "*/5 * * * *"
+  concurrencyPolicy: "Forbid"
+  suspend: false
+  startingDeadlineSeconds: 180
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: pixta-uploader-sqs2s3-cronjob
+            stage: staging
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: pixta-uploader-clean-files-cronjob
+  labels:
+    app: pixta-uploader-clean-files-cronjob
+    stage: staging
+spec:
+  schedule: "*/30 * * * *"
+  concurrencyPolicy: "Forbid"
+  suspend: false
+  startingDeadlineSeconds: 180
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: pixta-uploader-clean-files-cronjob
+            stage: staging

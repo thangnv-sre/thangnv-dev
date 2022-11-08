@@ -1,0 +1,108 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pngfm-checktool-result-poller
+  labels:
+    app: pngfm-checktool-result-poller
+    stage: staging
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: pngfm-checktool-result-poller
+      stage: staging
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+      labels:
+        app: pngfm-checktool-result-poller
+        stage: staging
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pngfm-pngcheck-poller
+  labels:
+    app: pngfm-pngcheck-poller
+    stage: staging
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: pngfm-pngcheck-poller
+      stage: staging
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+      labels:
+        app: pngfm-pngcheck-poller
+        stage: staging
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pngfm-jpgcheck-poller
+  labels:
+    app: pngfm-jpgcheck-poller
+    stage: staging
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: pngfm-jpgcheck-poller
+      stage: staging
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+      labels:
+        app: pngfm-jpgcheck-poller
+        stage: staging
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pngfm-checktool-start-poller
+  labels:
+    app: pngfm-checktool-start-poller
+    stage: staging
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: pngfm-checktool-start-poller
+      stage: staging
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+      labels:
+        app: pngfm-checktool-start-poller
+        stage: staging
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pngfm-product-poller
+  labels:
+    app: pngfm-product-poller
+    stage: staging
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: pngfm-product-poller
+      stage: staging
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+      labels:
+        app: pngfm-product-poller
+        stage: staging

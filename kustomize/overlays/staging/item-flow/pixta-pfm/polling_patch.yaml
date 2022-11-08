@@ -1,0 +1,151 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pfm-checktool-result-poller
+  labels:
+    app: pfm-checktool-result-poller
+    stage: staging
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: pfm-checktool-result-poller
+      stage: staging
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+      labels:
+        app: pfm-checktool-result-poller
+        stage: staging
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pfm-checktool-start-poller
+  labels:
+    app: pfm-checktool-start-poller
+    stage: staging
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: pfm-checktool-start-poller
+      stage: staging
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+      labels:
+        app: pfm-checktool-start-poller
+        stage: staging
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pfm-product-poller
+  labels:
+    app: pfm-product-poller
+    stage: staging
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: pfm-product-poller
+      stage: staging
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+      labels:
+        app: pfm-product-poller
+        stage: staging
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pfm-tag-poller
+  labels:
+    app: pfm-tag-poller
+    stage: staging
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: pfm-tag-poller
+      stage: staging
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+      labels:
+        app: pfm-tag-poller
+        stage: staging
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pfm-thumbnail-poller
+  labels:
+    app: pfm-thumbnail-poller
+    stage: staging
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: pfm-thumbnail-poller
+      stage: staging
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+      labels:
+        app: pfm-thumbnail-poller
+        stage: staging
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pfm-auto-tag-result-poller
+  labels:
+    app: pfm-auto-tag-result-poller
+    stage: staging
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: pfm-auto-tag-result-poller
+      stage: staging
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+      labels:
+        app: pfm-auto-tag-result-poller
+        stage: staging
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pfm-ra-poller
+  labels:
+    app: pfm-ra-poller
+    stage: staging
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: pfm-ra-poller
+      stage: staging
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+      labels:
+        app: pfm-ra-poller
+        stage: staging

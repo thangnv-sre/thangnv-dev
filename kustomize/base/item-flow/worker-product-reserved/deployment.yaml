@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker-product-reserved
+  labels:
+    app: worker-product-reserved
+spec:
+  selector:
+    matchLabels:
+      app: worker-product-reserved
+  template:
+    metadata:
+      labels:
+        app: worker-product-reserved
+    spec:
+      containers:
+        - name: worker-product-reserved
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/worker-product:prod-workerproduct-reserved
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: worker-product-reserved-common-env
+            - secretRef:
+                name: worker-product-reserved-secret
+          resources:
+            limits:
+              memory: "1600Mi"
+            requests:
+              memory: "800Mi"
+              cpu: "2"

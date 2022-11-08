@@ -1,0 +1,14 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: pngfm-ingress-external
+  annotations:
+    kubernetes.io/ingress.class: nginx-external
+spec:
+  rules:
+    - host: pngfm-staging.pixtavietnam.com
+      http:
+        paths:
+          - backend:
+              serviceName: pngfm-svc
+              servicePort: 80

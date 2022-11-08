@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pixta-uploader
+  labels:
+    app: pixta-uploader
+    stage: staging
+spec:
+  selector:
+    matchLabels:
+      app: pixta-uploader
+      stage: staging
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 0%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: pixta-uploader
+        stage: staging

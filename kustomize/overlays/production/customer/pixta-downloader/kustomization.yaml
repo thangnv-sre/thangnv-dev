@@ -1,0 +1,25 @@
+bases:
+  - ../../../../base/customer/pixta-downloader
+resources:
+  - ingress.yaml
+  - secret.yaml
+  - scaledobject.yaml
+  - pdb.yaml
+configMapGenerator:
+  - name: pixta-downloader-application-env
+    behavior: merge
+    literals:
+      - RAILS_ENV=production
+      - CACHE_STORE_LOCATION=contents.rddroc.0001.apne1.cache.amazonaws.com
+      - ERROR_TRACKER_HOST=error-tracker.pixta.jp
+      - NEWRELIC_APP_NAME=pixta-downloader
+  - name: pixta-downloader-nginx-env
+    literals:
+      - NGINX_HTTP_HOST="$http_host"
+      - NGINX_RESOLVER_HOST="10.1.0.2"
+      - NGINX_SERVER_NAME="download.pixta.jp download.pixtastock.com pixta_downloader"
+generatorOptions:
+  disableNameSuffixHash: false
+patchesStrategicMerge:
+  - deployment_patch.yaml
+  - service_patch.yaml

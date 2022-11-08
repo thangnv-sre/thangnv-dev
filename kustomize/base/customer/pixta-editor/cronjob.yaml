@@ -1,0 +1,98 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: pixta-job-post-chatwork
+  labels:
+    app: pixta-job-post-chatwork
+spec:
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: pixta-job-post-chatwork
+        spec:
+          restartPolicy: Never
+          containers:
+            - command:
+                [
+                  "bash",
+                  "-c",
+                  "bin/rails runner 'PostChatwork.new.run'",
+                ]
+              envFrom:
+                - configMapRef:
+                    name: editor-common-env
+                    optional: false
+                - secretRef:
+                    name: editor-secret
+                    optional: false
+              image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/editor-api:latest
+              imagePullPolicy: Always
+              name: job-post-chatwork
+          terminationGracePeriodSeconds: 30
+  schedule: "5 0 * * *"
+  startingDeadlineSeconds: 3600
+  successfulJobsHistoryLimit: 3
+
+---
+# apiVersion: batch/v1beta1
+# kind: CronJob
+# metadata:
+#   name: pixta-job-update-editor-data
+#   labels:
+#     app: pixta-job-update-editor-data
+# spec:
+#   concurrencyPolicy: Forbid
+#   failedJobsHistoryLimit: 1
+#   jobTemplate:
+#     spec:
+#       backoffLimit: 0
+#       template:
+#         metadata:
+#           labels:
+#             app: pixta-job-update-editor-data
+#         spec:
+#           restartPolicy: Never
+#           volumes:
+#             - configMap:
+#                 name: pixta-editor-script
+#               name: editor-conf
+#           containers:
+#             - args:
+#                 - -c
+#                 - sleep 60 & /usr/local/bin/ruby script/rails runner "UpdateEditorDatasBatch.run"
+#               command:
+#                 - /bin/bash
+#               env:
+#                 - name: LANG
+#                   value: ja_JP.UTF-8
+#                 - name: RAILS_ENV
+#                   value: staging
+#                 - name: RAILS_ROOT
+#                   value: /pixta
+#                 - name: TZ
+#                   value: Asia/Tokyo
+#               envFrom:
+#                 - configMapRef:
+#                     name: pixta-common-env
+#                     optional: false
+#                 - secretRef:
+#                     name: pixta-secret
+#                     optional: false
+#               image: 567351176096.dkr.ecr.ap-northeast-1.amazonaws.com/stg-pixta-app:latest
+#               imagePullPolicy: Always
+#               name: job-update-editor-data
+#               volumeMounts:
+#                 - name: editor-conf
+#                   mountPath: /pixta/lib/batch/update_editor_datas_batch.rb
+#                   subPath: update_editor_datas_batch.rb
+#           terminationGracePeriodSeconds: 30
+#   schedule: "0 0 * * *"
+#   startingDeadlineSeconds: 3600
+#   successfulJobsHistoryLimit: 3
+#   suspend: false
+
+# ---
+

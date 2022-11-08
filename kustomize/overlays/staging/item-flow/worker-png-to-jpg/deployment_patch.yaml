@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker-png-to-jpg
+  labels:
+    app: worker-png-to-jpg
+    stage: staging
+spec:
+  selector:
+    matchLabels:
+      app: worker-png-to-jpg
+      stage: staging
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+      labels:
+        app: worker-png-to-jpg
+        stage: staging
+    spec:
+      containers:
+        - name: worker-thumbnail-reserved
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/png-to-jpg-worker:stg-a933863
+

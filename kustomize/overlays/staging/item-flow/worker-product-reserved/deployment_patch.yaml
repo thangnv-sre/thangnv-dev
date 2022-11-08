@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker-product-reserved
+  labels:
+    app: worker-product-reserved
+    stage: staging
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: worker-product-reserved
+      stage: staging
+  template:
+    metadata:
+      labels:
+        app: worker-product-reserved
+        stage: staging
+    spec:
+      containers:
+        - name: worker-product-reserved
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/worker-product-reserved:stg-reserved

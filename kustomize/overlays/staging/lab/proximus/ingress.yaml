@@ -1,0 +1,14 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: proximus-ingress-external
+  annotations:
+    kubernetes.io/ingress.class: nginx-external
+spec:
+  rules:
+    - host: proximus-staging.pixtastock.com
+      http:
+        paths:
+          - backend:
+              serviceName: proximus-svc
+              servicePort: 80

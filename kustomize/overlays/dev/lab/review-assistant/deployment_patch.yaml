@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: review-assistant
+  labels:
+    app: review-assistant
+    stage: staging
+spec:
+  selector:
+    matchLabels:
+      app: review-assistant
+      stage: staging
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+      labels:
+        app: review-assistant
+        stage: staging
+    spec:
+      containers:
+        - name: review-assistant
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/lab-ra:v1.0.0-cpu
+          imagePullPolicy: Always
+          command: ["/bin/bash"]
+          args: ["-c", "python3 service.py"]
+          # resources:
+          #   limits:
+              # nvidia.com/gpu: 1
+          resources:
+            requests:
+              memory: "10Gi"
+              cpu: "2"
+            limits:
+              memory: "13Gi"
+              cpu: "2.5"
+          envFrom:
+            - secretRef:
+                name: review-assistant-secret
+            - configMapRef:
+                name: review-assistant-application-env
+          volumeMounts:
+            - name: ra-ckpt-vol
+              mountPath: /pvn-review-assistant/checkpoint.bin
+              subPath: checkpoint.bin

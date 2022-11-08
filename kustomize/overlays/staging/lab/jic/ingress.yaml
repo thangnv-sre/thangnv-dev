@@ -1,0 +1,14 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: jic-ingress-external
+  annotations:
+    kubernetes.io/ingress.class: nginx-external
+spec:
+  rules: 
+    - host: jic-staging.pixtastock.com
+      http:
+        paths:
+          - backend:
+              serviceName: jic-svc
+              servicePort: 80

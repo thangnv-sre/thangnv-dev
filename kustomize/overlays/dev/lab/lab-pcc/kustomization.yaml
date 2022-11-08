@@ -1,0 +1,12 @@
+bases:
+  - ../../../../base/lab/lab-pcc
+resources:
+  # - scaledobject.yaml
+configMapGenerator:
+  - name: lab-pcc-conf
+    files:
+      - configmap/staging.yaml
+generatorOptions:
+  disableNameSuffixHash: true
+patchesStrategicMerge:
+  - deployment_patch.yaml

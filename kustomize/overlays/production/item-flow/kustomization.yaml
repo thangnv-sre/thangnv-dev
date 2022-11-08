@@ -1,0 +1,16 @@
+namespace: prod-item-flow
+bases:
+  - misc
+  - pixta-ffm
+  - pixta-pfm
+  - pixta-pngfm
+  - pixta-epsfm
+  - worker-thumbnail
+  - worker-thumbnail-reserved
+  - worker-product
+  - worker-product-reserved
+  - worker-eps-to-png
+  - worker-png-to-jpg
+  - worker-png
+  - pixta-check-tool
+  # - pixta-uploader

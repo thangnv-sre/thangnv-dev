@@ -1,0 +1,5 @@
+namespace: prod-contributor
+bases:
+  - misc
+  - footage-resize
+  - footage-resize-ondemand

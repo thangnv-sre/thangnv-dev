@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: footage-highscore
+  labels:
+    app: footage-highscore
+    stage: staging
+spec:
+  selector:
+    matchLabels:
+      app: footage-highscore
+      stage: staging
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+      labels:
+        app: footage-highscore
+        stage: staging
+    spec:
+      containers:
+        - name: footage-highscore
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/lab-highscore-footage:v1.0.0

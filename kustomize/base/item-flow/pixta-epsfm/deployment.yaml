@@ -1,0 +1,94 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: epsfm
+  labels:
+    app: epsfm
+spec:
+  selector:
+    matchLabels:
+      app: epsfm
+  template:
+    metadata:
+      labels:
+        app: epsfm
+    spec:
+      volumes:
+        - configMap:
+            items:
+              - key: nginx.conf
+                path: nginx.conf
+            name: epsfm-nginx-conf
+          name: nginx-conf
+        - configMap:
+            items:
+              - key: pixta-epsfm.conf
+                path: pixta-epsfm.conf
+            name: epsfm-nginx-conf
+          name: site-conf
+        - configMap:
+            items:
+              - key: puma.rb
+                path: puma.rb
+            name: epsfm-puma-rb
+          name: puma-conf
+        - name: web-sock
+          emptyDir: {}
+      containers:
+        - name: epsfm-app
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/eps-flow-manager:latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - mountPath: /var/www/eps-flow-manager/config/puma.rb
+              name: puma-conf
+              subPath: puma.rb
+            - mountPath: /var/run/sock
+              name: web-sock
+          resources:
+            requests:
+              memory: "700Mi"
+              cpu: "100m"
+            limits:
+              memory: "1400Mi"
+          envFrom:
+            - configMapRef:
+                name: epsfm-common-env
+            - secretRef:
+                name: epsfm-secret
+        - name: nginx
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/nginx:stable
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "100Mi"
+              cpu: "10m"
+            limits:
+              memory: "200Mi"
+          ports:
+            - containerPort: 80
+            - containerPort: 443
+          volumeMounts:
+            - mountPath: /var/run/sock
+              name: web-sock
+            - mountPath: /config/pixta-epsfm.conf
+              name: site-conf
+              subPath: pixta-epsfm.conf
+            - mountPath: /config/nginx.conf
+              name: nginx-conf
+              subPath: nginx.conf
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - sh
+                  - -c
+                  - cp -pf /config/nginx.conf /etc/nginx/nginx.conf && mkdir -p /etc/nginx/sites-enabled  && envsubst '$RAILS_ROOT' < /config/pixta-epsfm.conf > /etc/nginx/sites-enabled/pixta-epsfm.conf && nginx -s reload
+            preStop:
+              exec:
+                command:
+                  - /usr/sbin/nginx
+                  - -s
+                  - quit
+          envFrom:
+            - configMapRef:
+                name: epsfm-common-env

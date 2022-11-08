@@ -1,0 +1,14 @@
+bases:
+  - ../../../../base/lab/proximus
+resources:
+  - ingress.yaml
+  - secret.yaml
+configMapGenerator:
+  - name: proximus-common-env
+    literals:
+      - ENV=staging
+patchesStrategicMerge:
+  - deployment_patch.yaml
+  - service_patch.yaml
+generatorOptions: 
+  disableNameSuffixHash: false

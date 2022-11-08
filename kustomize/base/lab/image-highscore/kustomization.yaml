@@ -1,0 +1,9 @@
+resources:
+  - deployment.yaml
+  - pvc.yaml
+configMapGenerator:
+  - name: image-highscore-common-env
+    literals:
+      - s3_prod_bucket_name=pixta-image-product-jp
+generatorOptions:
+  disableNameSuffixHash: true

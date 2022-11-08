@@ -1,0 +1,295 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: pfm-new-cronjob
+  labels:
+    app: pfm-new-cronjob
+spec:
+  schedule: "*/20 * * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: pfm-new-cronjob
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: pfm-new-job
+              image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pfm_app:latest
+              imagePullPolicy: Always
+              command:
+                [
+                  "bash",
+                  "-c",
+                  "bin/rails runner 'Batch::Batch1.new(Item::STATUS_NEW).run'",
+                ]
+              envFrom:
+                - secretRef:
+                    name: pfm-secret
+              resources:
+                requests:
+                  memory: "500Mi"
+                  cpu: "200m"
+                limits:
+                  memory: "700Mi"
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: pfm-tag-cronjob
+  labels:
+    app: pfm-tag-cronjob
+spec:
+  schedule: "*/20 * * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: pfm-tag-cronjob
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: pfm-tag-job
+              image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pfm_app:latest
+              imagePullPolicy: Always
+              command:
+                [
+                  "bash",
+                  "-c",
+                  "bin/rails runner 'Batch::Batch1.new(Item::STATUS_TAG, 1500).run'",
+                ]
+              envFrom:
+                - secretRef:
+                    name: pfm-secret
+              resources:
+                requests:
+                  memory: "500Mi"
+                  cpu: "200m"
+                limits:
+                  memory: "700Mi"
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: pfm-thumbnail-cronjob
+  labels:
+    app: pfm-thumbnail-cronjob
+spec:
+  schedule: "45 * * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: pfm-thumbnail-cronjob
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: pfm-thumbnail-job
+              image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pfm_app:latest
+              imagePullPolicy: Always
+              command:
+                [
+                  "bash",
+                  "-c",
+                  "bin/rails runner 'Batch::Batch1.new(Item::STATUS_THUMB).run'",
+                ]
+              envFrom:
+                - secretRef:
+                    name: pfm-secret
+              resources:
+                requests:
+                  memory: "500Mi"
+                  cpu: "200m"
+                limits:
+                  memory: "700Mi"
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: pfm-ra-cronjob
+  labels:
+    app: pfm-ra-cronjob
+spec:
+  schedule: "0 * * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: pfm-ra-cronjob
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: pfm-ra-job
+              image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pfm_app:latest
+              imagePullPolicy: Always
+              command:
+                [
+                    "bash",
+                    "-c",
+                    "bin/rails runner 'Batch::Batch1.new(Item::STATUS_RA).run'",
+                ]
+              envFrom:
+                - secretRef:
+                    name: pfm-secret
+              resources:
+                requests:
+                  memory: "500Mi"
+                  cpu: "200m"
+                limits:
+                  memory: "700Mi"
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: pfm-review-ok-cronjob
+  labels:
+    app: pfm-review-ok-cronjob
+spec:
+  schedule: "*/20 * * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: pfm-review-ok-cronjob
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: pfm-review-ok-job
+              image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pfm_app:latest
+              imagePullPolicy: Always
+              command:
+                [
+                  "bash",
+                  "-c",
+                  "bin/rails runner 'Batch::Batch1.new(Item::STATUS_REVIEW2, 3000).run'",
+                ]
+              envFrom:
+                - secretRef:
+                    name: pfm-secret
+              resources:
+                requests:
+                  memory: "500Mi"
+                  cpu: "200m"
+                limits:
+                  memory: "1500Mi"
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: pfm-abort-cronjob
+  labels:
+    app: pfm-abort-cronjob
+spec:
+  schedule: "*/5 * * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: pfm-abort-cronjob
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: pfm-abort-job
+              image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pfm_app:latest
+              imagePullPolicy: Always
+              command:
+                [
+                  "bash",
+                  "-c",
+                  "bin/rails runner 'Batch::Batch1.new(Item::STATUS_PREABORT).run'",
+                ]
+              envFrom:
+                - secretRef:
+                    name: pfm-secret
+              resources:
+                requests:
+                  memory: "500Mi"
+                  cpu: "200m"
+                limits:
+                  memory: "700Mi"
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: pfm-update-result-cronjob
+  labels:
+    app: pfm-update-result-cronjob
+spec:
+  schedule: "*/10 * * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: pfm-update-result-cronjob
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: pfm-update-result-job
+              image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pfm_app:latest
+              imagePullPolicy: Always
+              command:
+                [
+                  "bash",
+                  "-c",
+                  "bin/rails runner 'Batch::UpdateResultForPixtaMain.new.run'",
+                ]
+              envFrom:
+                - secretRef:
+                    name: pfm-secret
+              resources:
+                requests:
+                  memory: "500Mi"
+                  cpu: "200m"
+                limits:
+                  memory: "700Mi"
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: pfm-request-check-tag-cronjob
+  labels:
+    app: pfm-request-check-tag-cronjob
+spec:
+  schedule: "*/10 * * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: pfm-request-check-tag-cronjob
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: pfm-request-check-tag-job
+              image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pfm_app:latest
+              imagePullPolicy: Always
+              command:
+                [
+                  "bash",
+                  "-c",
+                  "bin/rails runner 'Batch::Batch1.new(Item::STATUS_SALE).run'",
+                ]
+              envFrom:
+                - secretRef:
+                    name: pfm-secret
+              resources:
+                requests:
+                  memory: "500Mi"
+                  cpu: "200m"
+                limits:
+                  memory: "700Mi"

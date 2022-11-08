@@ -1,0 +1,128 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: epsfm-autocheck-poller
+  labels:
+    app: epsfm-autocheck-poller
+    stage: production
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: epsfm-autocheck-poller
+      stage: production
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-production
+      labels:
+        app: epsfm-autocheck-poller
+        stage: production
+    spec:
+      containers:
+        - name: epsfm-autocheck-poller
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/eps-flow-manager:production
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: epsfm-epscheck-poller
+  labels:
+    app: epsfm-epscheck-poller
+    stage: production
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: epsfm-epscheck-poller
+      stage: production
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-production
+      labels:
+        app: epsfm-epscheck-poller
+        stage: production
+    spec:
+      containers:
+        - name: epsfm-epscheck-poller
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/eps-flow-manager:production
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: epsfm-jpgcheck-poller
+  labels:
+    app: epsfm-jpgcheck-poller
+    stage: production
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: epsfm-jpgcheck-poller
+      stage: production
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-production
+      labels:
+        app: epsfm-jpgcheck-poller
+        stage: production
+    spec:
+      containers:
+        - name: epsfm-jpgcheck-poller
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/eps-flow-manager:production
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: epsfm-checktool-start-poller
+  labels:
+    app: epsfm-checktool-start-poller
+    stage: production
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: epsfm-checktool-start-poller
+      stage: production
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-production
+      labels:
+        app: epsfm-checktool-start-poller
+        stage: production
+    spec:
+      containers:
+        - name: epsfm-checktool-start-poller
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/eps-flow-manager:production
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: epsfm-checktool-result-poller
+  labels:
+    app: epsfm-checktool-result-poller
+    stage: production
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: epsfm-checktool-result-poller
+      stage: production
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-production
+      labels:
+        app: epsfm-checktool-result-poller
+        stage: production
+    spec:
+      containers:
+        - name: epsfm-checktool-result-poller
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/eps-flow-manager:production

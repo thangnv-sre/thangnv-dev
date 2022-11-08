@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lab-pcc4f
+  labels:
+    app: lab-pcc4f
+    stage: staging
+spec:
+  selector:
+    matchLabels:
+      app: lab-pcc4f
+      stage: staging
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+      labels:
+        app: lab-pcc4f
+        stage: staging
+    spec:
+      nodeSelector:
+        # nvidia.com/gpu: "true"
+        lab-worker: "true"
+      volumes:
+        - configMap:
+            items:
+              - key: staging.yaml
+                path: config.yaml
+            name: lab-pcc4f-conf
+          name: pcc4f-conf
+      containers:
+        - name: lab-pcc4f
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/lab-pcc4f:v3.0.0
+          volumeMounts:
+            - mountPath: /pcc_v3/config/footage
+              name: pcc4f-conf

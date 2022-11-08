@@ -1,0 +1,14 @@
+bases:
+  - ../../../../base/lab/footage-highscore
+resources:
+  # - wpa.yaml
+  - scaledobject.yaml
+configMapGenerator:
+  - name: footage-highscore-common-env
+    behavior: merge
+    literals:
+      - env=prod
+      - output_sqs_url=https://sqs.ap-northeast-1.amazonaws.com/045675425505/response_check_footage_high_score_tag_prod
+      - input_sqs_url=https://sqs.ap-northeast-1.amazonaws.com/045675425505/request_check_footage_high_score_tag_prod
+patchesStrategicMerge:
+  - deployment_patch.yaml

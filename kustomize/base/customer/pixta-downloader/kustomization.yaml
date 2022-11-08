@@ -1,0 +1,17 @@
+resources:
+  - deployment.yaml
+  - service.yaml
+configMapGenerator:
+  - name: pixta-downloader-application-env
+    literals:
+      - RAILS_ROOT=/pixta-downloader
+      - RAILS_LOG_TO_STDOUT=true
+      - NEWRELIC_PRO=false
+      - AWS_REGION=ap-northeast-1
+  - name: pixta-downloader-web-config
+    files:
+      - configmap/nginx.conf
+      - configmap/pixta-downloader.conf
+      - configmap/puma.rb
+generatorOptions:
+  disableNameSuffixHash: false

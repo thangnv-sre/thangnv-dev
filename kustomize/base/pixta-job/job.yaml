@@ -1,0 +1,73 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  labels:
+    chart: prod-pixta-job-0.1.0
+    job-name: prod-pixta-job-ng-all-topic-collection-items
+  name: prod-pixta-job-ng-all-topic-collection-items
+  namespace: pixta-job
+spec:
+  backoffLimit: 10
+  completions: 1
+  parallelism: 1
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::567351176096:role/pixta-production
+      labels:
+        app: prod-pixta-job
+        job-name: prod-pixta-job-ng-all-topic-collection-items
+        release: prod-pixta-job
+    spec:
+      restartPolicy: Never
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                  - key: lifecycle
+                    operator: NotIn
+                    values:
+                      - Ec2Spot
+              weight: 10
+      volumes:
+        - configMap:
+            name: pixta-ng-all-topic-collection-script
+          name: pixta-script
+      containers:
+        - args:
+            - -c
+            - sleep 60 & /usr/local/bin/ruby script/rails runner "NgAllTopicCollectionItems.run"
+          command:
+            - /bin/bash
+          env:
+            - name: LANG
+              value: ja_JP.UTF-8
+            - name: RAILS_ENV
+              value: production
+            - name: RAILS_ROOT
+              value: /pixta
+            - name: TZ
+              value: Asia/Tokyo
+          envFrom:
+            - configMapRef:
+                name: prod-pixta-job-conf
+                optional: false
+            - secretRef:
+                name: prod-pixta-job-secret
+                optional: false
+          image: 567351176096.dkr.ecr.ap-northeast-1.amazonaws.com/prod-pixta-app:latest
+          imagePullPolicy: Always
+          name: job-ng-all-topic-collection-items
+          volumeMounts:
+            - name: pixta-script
+              mountPath: /pixta/lib/batch/ng_all_topic_collection_items.rb
+              subPath: ng_all_topic_collection_items.rb
+          resources:
+            limits:
+              cpu: "1"
+              memory: 2Gi
+            requests:
+              cpu: 50m
+              memory: 250Mi
+          workingDir: /pixta

@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: proximus
+  labels:
+    app: proximus
+    stage: staging
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: proximus
+      stage: staging
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::045675425505:role/proximus_opswork_staging
+      labels:
+        app: proximus
+        stage: staging
+    spec:
+      # nodeSelector:
+      #   # node.kubernetes.io/lifecycle: spot
+      #   lab-worker: "true"
+      # tolerations:
+      #   - key: "labInstance"
+      #     operator: "Equal"
+      #     value: "true"
+      #     effect: "NoSchedule"
+      containers:
+        - name: proximus
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/proximus:cpu-2.0.1

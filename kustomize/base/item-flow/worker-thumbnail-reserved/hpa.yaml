@@ -1,0 +1,41 @@
+apiVersion: metrics.aws/v1alpha1
+kind: ExternalMetric
+metadata:
+  name: worker-thumbnail-reserved-metric
+spec:
+  name: worker-thumbnail-reserved-metric
+  resource:
+    resource: "deployment"
+  queries:
+    - id: sqs_worker_thumbnail_reserved
+      metricStat:
+        metric:
+          namespace: "AWS/SQS"
+          metricName: "ApproximateNumberOfMessagesVisible"
+          dimensions:
+            - name: QueueName
+              value: "worker_thumbnail_reserved_request_jp_stg"
+        period: 300
+        stat: Average
+        unit: Count
+      returnData: true
+---
+# kind: HorizontalPodAutoscaler
+# apiVersion: autoscaling/v2beta1
+# metadata:
+#   name: worker-thumbnail-reserved-hpa
+# spec:
+#   scaleTargetRef:
+#     apiVersion: apps/v1beta1
+#     kind: Deployment
+#     name: worker-thumbnail-reserved
+#   minReplicas: 1
+#   maxReplicas: 1
+#   metrics:
+#   - type: External
+#     external:
+#       metricName: worker-thumbnail-reserved-metric
+#       targetAverageValue: 500
+
+
+      

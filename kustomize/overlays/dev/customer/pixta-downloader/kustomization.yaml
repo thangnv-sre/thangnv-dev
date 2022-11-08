@@ -1,0 +1,25 @@
+bases:
+  - ../../../../base/customer/pixta-downloader
+resources:
+  - ingress.yaml
+  - secret.yaml
+  # - scaledobject.yaml
+configMapGenerator:
+  - name: pixta-downloader-application-env
+    behavior: merge
+    literals:
+      - RAILS_ENV=staging
+      - DATABASE_HOST=pixtastaging-vpc-rds.pixta.jp
+      - DATABASE_DBNAME=pixtamigration
+      - HEALTH_CHECK_BASIC_AUTH_USERNAME=pixta-downloader
+      - HEALTH_CHECK_BASIC_AUTH_PASSWORD=pixtavietnam
+  - name: pixta-downloader-nginx-env
+    literals:
+      - NGINX_HTTP_HOST="$http_host"
+      - NGINX_RESOLVER_HOST="10.0.0.2"
+      - NGINX_SERVER_NAME="download-dev.pixta.jp download-dev.pixtastock.com editor-dev.pixtastock.com editor-dev.pixta.jp"
+generatorOptions:
+  disableNameSuffixHash: false
+patchesStrategicMerge:
+  - deployment_patch.yaml
+  - service_patch.yaml

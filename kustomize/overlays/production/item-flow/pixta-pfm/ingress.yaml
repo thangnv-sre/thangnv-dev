@@ -1,0 +1,14 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: pfm-ingress-internal
+  annotations:
+    kubernetes.io/ingress.class: nginx-internal
+spec:
+  rules:
+    - host: pfm.pixtavietnam.com
+      http:
+        paths:
+          - backend:
+              serviceName: pfm-svc
+              servicePort: 80

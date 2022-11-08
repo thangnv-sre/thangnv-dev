@@ -1,0 +1,10 @@
+# creation rules are evaluated sequentially, the first match wins
+creation_rules:
+        # upon creation of a file that matches the pattern *.dev.yaml,
+        # KMS set A is used
+        - path_regex: .*/workloads/.*/secret.enc.yaml
+          kms: 'arn:aws:kms:ap-northeast-1:045675425505:key/97008896-549e-41e0-ac53-58069a992bec'
+          encrypted_regex: ^(data|stringData)$
+        - path_regex: .*/workloads/.*/secret.yaml
+          kms: 'arn:aws:kms:ap-northeast-1:045675425505:key/97008896-549e-41e0-ac53-58069a992bec'
+          encrypted_regex: ^(data|stringData)$

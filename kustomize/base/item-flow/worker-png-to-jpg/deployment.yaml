@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker-png-to-jpg
+  labels:
+    app: worker-png-to-jpg
+spec:
+  selector:
+    matchLabels:
+      app: worker-png-to-jpg
+  template:
+    metadata:
+      labels:
+        app: worker-png-to-jpg
+    spec:
+      tolerations:
+        - key: "spotInstance"
+          operator: "Equal"
+          value: "true"
+          effect: "PreferNoSchedule"
+      containers:
+        - name: worker-png-to-jpg
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/png-to-jpg-worker:stg-dev-1541
+          envFrom:
+            - configMapRef:
+                name: worker-png-to-jpg-common-env
+            - secretRef:
+                name: worker-png-to-jpg-secret
+          resources:
+            requests:
+              memory: "2G"
+              cpu: "1"

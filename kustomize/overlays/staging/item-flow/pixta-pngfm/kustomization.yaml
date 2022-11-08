@@ -1,0 +1,18 @@
+bases:
+  - ../../../../base/item-flow/pixta-pngfm
+resources:
+  - ingress.yaml
+  - secret.yaml
+configMapGenerator:
+  - name: pngfm-common-env
+    behavior: merge
+    literals:
+      - RAILS_ENV=staging
+      - MIN_THREAD=4
+      - MAX_THREAD=8
+patchesStrategicMerge:
+  - deployment_patch.yaml
+  - cronjob_patch.yaml
+  - delayed_job_patch.yaml
+  - polling_patch.yaml
+  - service_patch.yaml

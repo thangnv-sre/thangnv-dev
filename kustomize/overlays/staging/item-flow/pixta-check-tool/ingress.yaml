@@ -1,0 +1,42 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx-external
+  name: check-tool-web-ingress-external
+spec:
+  rules:
+  - host: check-staging.pixta.jp
+    http:
+      paths:
+      - backend:
+          serviceName: check-tool-web-svc
+          servicePort: 80
+  - host: staging-checktool.pixta.jp
+    http:
+      paths:
+      - backend:
+          serviceName: check-tool-web-svc
+          servicePort: 80
+---
+
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx-external
+  name: check-tool-downloader-ingress-external
+spec:
+  rules:
+    - host: download-check-staging.pixta.jp
+      http:
+        paths:
+          - backend:
+              serviceName: check-tool-downloader-svc
+              servicePort: 80
+    - host: download-check-staging.pixtastock.com
+      http:
+        paths:
+          - backend:
+              serviceName: check-tool-downloader-svc
+              servicePort: 80

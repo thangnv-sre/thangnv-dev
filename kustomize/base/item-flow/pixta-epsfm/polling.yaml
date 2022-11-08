@@ -1,0 +1,214 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: epsfm-autocheck-poller
+  labels:
+    app: epsfm-autocheck-poller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: epsfm-autocheck-poller
+  template:
+    metadata:
+      labels:
+        app: epsfm-autocheck-poller
+    spec:
+      nodeSelector:
+        balance-spot-public-instance: "true"
+      tolerations:
+        - key: "balance-spot-public-instance"
+          operator: "Equal"
+          value: "true"
+          effect: "PreferNoSchedule"
+      containers:
+        - name: epsfm-autocheck-poller
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/eps-flow-manager:latest
+          imagePullPolicy: Always
+          command:
+            [
+              "bash",
+              "-c",
+              "bin/rails runner 'Batch::ResponseBatches::GetAutoCheckResult.new.run'",
+            ]
+          envFrom:
+            - secretRef:
+                name: epsfm-secret
+            - configMapRef:
+                name: epsfm-common-env
+          resources:
+            requests:
+              memory: "400Mi"
+              cpu: "100m"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: epsfm-epscheck-poller
+  labels:
+    app: epsfm-epscheck-poller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: epsfm-epscheck-poller
+  template:
+    metadata:
+      labels:
+        app: epsfm-epscheck-poller
+    spec:
+      nodeSelector:
+        balance-spot-public-instance: "true"
+      tolerations:
+        - key: "balance-spot-public-instance"
+          operator: "Equal"
+          value: "true"
+          effect: "PreferNoSchedule"
+      containers:
+        - name: epsfm-epscheck-poller
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/eps-flow-manager:latest
+          imagePullPolicy: Always
+          command:
+            [
+              "bash",
+              "-c",
+              "bin/rails runner 'Batch::ResponseBatches::GetEpsCheckResult.new.run'",
+            ]
+          envFrom:
+            - secretRef:
+                name: epsfm-secret
+            - configMapRef:
+                name: epsfm-common-env
+          resources:
+            requests:
+              memory: "400Mi"
+              cpu: "100m"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: epsfm-jpgcheck-poller
+  labels:
+    app: epsfm-jpgcheck-poller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: epsfm-jpgcheck-poller
+  template:
+    metadata:
+      labels:
+        app: epsfm-jpgcheck-poller
+    spec:
+      nodeSelector:
+        balance-spot-public-instance: "true"
+      tolerations:
+        - key: "balance-spot-public-instance"
+          operator: "Equal"
+          value: "true"
+          effect: "PreferNoSchedule"
+      containers:
+        - name: epsfm-jpgcheck-poller
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/eps-flow-manager:latest
+          imagePullPolicy: Always
+          command:
+            [
+              "bash",
+              "-c",
+              "bin/rails runner 'Batch::ResponseBatches::GetResponseJpgCheck.new.run'",
+            ]
+          envFrom:
+            - secretRef:
+                name: epsfm-secret
+            - configMapRef:
+                name: epsfm-common-env
+          resources:
+            requests:
+              memory: "400Mi"
+              cpu: "100m"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: epsfm-checktool-start-poller
+  labels:
+    app: epsfm-checktool-start-poller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: epsfm-checktool-start-poller
+  template:
+    metadata:
+      labels:
+        app: epsfm-checktool-start-poller
+    spec:
+      nodeSelector:
+        balance-spot-public-instance: "true"
+      tolerations:
+        - key: "balance-spot-public-instance"
+          operator: "Equal"
+          value: "true"
+          effect: "PreferNoSchedule"
+      containers:
+        - name: epsfm-checktool-start-poller
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/eps-flow-manager:latest
+          imagePullPolicy: Always
+          command:
+            [
+              "bash",
+              "-c",
+              "bin/rails runner 'Batch::ResponseBatches::ChecktoolStartCheck.new.run'",
+            ]
+          envFrom:
+            - secretRef:
+                name: epsfm-secret
+            - configMapRef:
+                name: epsfm-common-env
+          resources:
+            requests:
+              memory: "400Mi"
+              cpu: "100m"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: epsfm-checktool-result-poller
+  labels:
+    app: epsfm-checktool-result-poller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: epsfm-checktool-result-poller
+  template:
+    metadata:
+      labels:
+        app: epsfm-checktool-result-poller
+    spec:
+      nodeSelector:
+        balance-spot-public-instance: "true"
+      tolerations:
+        - key: "balance-spot-public-instance"
+          operator: "Equal"
+          value: "true"
+          effect: "PreferNoSchedule"
+      containers:
+        - name: epsfm-checktool-result-poller
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/eps-flow-manager:latest
+          imagePullPolicy: Always
+          command:
+            [
+              "bash",
+              "-c",
+              "bin/rails runner 'Batch::ResponseBatches::GetChecktoolResult.new.run'",
+            ]
+          envFrom:
+            - secretRef:
+                name: epsfm-secret
+            - configMapRef:
+                name: epsfm-common-env
+          resources:
+            requests:
+              memory: "400Mi"
+              cpu: "100m"

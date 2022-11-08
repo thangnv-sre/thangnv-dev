@@ -1,0 +1,38 @@
+apiVersion: metrics.aws/v1alpha1
+kind: ExternalMetric
+metadata:
+  name: lab-pcc-queue-length
+spec:
+  name: lab-pcc-queue-length
+  resource:
+    resource: "deployment"
+  queries:
+    - id: sqs_source_item_classification
+      metricStat:
+        metric:
+          namespace: "AWS/SQS"
+          metricName: "ApproximateNumberOfMessagesVisible"
+          dimensions:
+            - name: QueueName
+              value: "source_item_classification_queue_staging"
+        period: 300
+        stat: Average
+        unit: Count
+      returnData: true
+---
+kind: HorizontalPodAutoscaler
+apiVersion: autoscaling/v2beta1
+metadata:
+  name: lab-pcc-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1beta1
+    kind: Deployment
+    name: lab-pcc
+  minReplicas: 1
+  maxReplicas: 60
+  metrics:
+  - type: External
+    external:
+      metricName: lab-pcc-queue-length
+      targetAverageValue: 60

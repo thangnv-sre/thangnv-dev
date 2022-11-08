@@ -1,0 +1,15 @@
+bases:
+  - ../../../../base/item-flow/worker-png-to-jpg
+resources:
+  - secret.yaml
+  - scaledobject.yaml
+  # - wpa.yaml
+configMapGenerator:
+  - name: worker-png-to-jpg-common-env
+    behavior: merge
+    literals:
+      - RAILS_ENV=production
+      - REQUEST_QUEUE=https://sqs.ap-northeast-1.amazonaws.com/045675425505/worker_png_to_jpg_request_prod
+      - RESPONSE_QUEUE=https://sqs.ap-northeast-1.amazonaws.com/045675425505/worker_png_to_jpg_result_prod
+patchesStrategicMerge:
+  - deployment_patch.yaml

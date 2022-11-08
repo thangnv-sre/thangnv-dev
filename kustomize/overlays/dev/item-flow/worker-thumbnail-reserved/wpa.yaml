@@ -1,0 +1,10 @@
+apiVersion: k8s.practo.dev/v1alpha1
+kind: WorkerPodAutoScaler
+metadata:
+  name: worker-thumbnail-reserved-wpa
+spec:
+  minReplicas: 0
+  maxReplicas: 0
+  targetMessagesPerWorker: 10
+  deploymentName: worker-thumbnail-reserved
+  queueURI: https://sqs.ap-northeast-1.amazonaws.com/045675425505/worker_thumbnail_reserved_request_jp_stg

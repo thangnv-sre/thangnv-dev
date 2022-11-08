@@ -1,0 +1,98 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: checktool-create-check-items-poller
+  labels:
+    app: checktool-create-check-items-poller
+spec:
+  selector:
+    matchLabels:
+      app: checktool-create-check-items-poller
+  template:
+    metadata:
+      labels:
+        app: checktool-create-check-items-poller
+    spec:
+      containers:
+        - name: checktool-create-check-items-poller
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pixta-check-tool:latest
+          imagePullPolicy: Always
+          command: ["bash", "-c", "bin/rails runner 'Batch::CreateCheckItems.new.run'"]
+          envFrom:
+            - configMapRef:
+                name: check-tool-common-env
+            - configMapRef:
+                name: check-tool-application-env
+            - secretRef:
+                name: check-tool-secret
+          resources:
+            requests:
+              memory: "400Mi"
+              cpu: "100m"
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: checktool-abort-check-poller
+  labels:
+    app: checktool-abort-check-poller
+spec:
+  selector:
+    matchLabels:
+      app: checktool-abort-check-poller
+  template:
+    metadata:
+      labels:
+        app: checktool-abort-check-poller
+    spec:
+      containers:
+        - name: checktool-abort-check-poller
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pixta-check-tool:latest
+          imagePullPolicy: Always
+          command: ["bash", "-c", "bin/rails runner 'Batch::AbortChecks.new.run'"]
+          envFrom:
+            - configMapRef:
+                name: check-tool-common-env
+            - configMapRef:
+                name: check-tool-application-env
+            - secretRef:
+                name: check-tool-secret
+          resources:
+            requests:
+              memory: "400Mi"
+              cpu: "100m"
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: checktool-close-sending-check-result-poller
+  labels:
+    app: checktool-close-sending-check-result-poller
+spec:
+  selector:
+    matchLabels:
+      app: checktool-close-sending-check-result-poller
+  template:
+    metadata:
+      labels:
+        app: checktool-close-sending-check-result-poller
+    spec:
+      containers:
+        - name: checktool-close-sending-check-result-poller
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pixta-check-tool:latest
+          imagePullPolicy: Always
+          command: ["bash", "-c", "bin/rails runner 'Batch::CloseSendingCheckResult.new.run'"]
+          envFrom:
+            - configMapRef:
+                name: check-tool-common-env
+            - configMapRef:
+                name: check-tool-application-env
+            - secretRef:
+                name: check-tool-secret
+          resources:
+            requests:
+              memory: "400Mi"
+              cpu: "100m"
+---

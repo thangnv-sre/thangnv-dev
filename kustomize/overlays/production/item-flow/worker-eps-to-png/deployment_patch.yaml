@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker-eps-to-png
+  labels:
+    app: worker-eps-to-png
+    stage: production
+  annotations:
+    kube-score/ignore: deployment-has-poddisruptionbudget
+spec:
+  selector:
+    matchLabels:
+      app: worker-eps-to-png
+      stage: production
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-production
+      labels:
+        app: worker-eps-to-png
+        stage: production
+    spec:
+      nodeSelector:
+        high-cpu-spot-public-instance: "true"
+      tolerations:
+        - key: "high-cpu-spot-public-instance"
+          operator: "Equal"
+          value: "true"
+          effect: "PreferNoSchedule"
+      containers:
+        - name: worker-eps-to-png
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/eps-to-png-worker:release-20210603-0953
+          imagePullPolicy: Always

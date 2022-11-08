@@ -1,0 +1,12 @@
+namespace: prod-lab
+bases:
+  - misc
+  - footage-highscore
+  - image-feature-extraction
+  - image-highscore
+  - lab-pcc
+  - tag-suggestion
+  - proximus
+  - learning-to-rank
+  - lab-pcc4f
+  - review-assistant

@@ -1,0 +1,92 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: title-translation
+  labels:
+    app: title-translation
+spec:
+  selector:
+    matchLabels:
+      app: title-translation
+  template:
+    metadata:
+      labels:
+        app: title-translation
+    spec:
+      volumes:
+        - configMap:
+            items:
+              - key: nginx.conf
+                path: nginx.conf
+            name: title-translation-nginx-conf
+          name: nginx-conf
+        - configMap:
+            items:
+              - key: title-translation.conf
+                path: title-translation.conf
+            name: title-translation-nginx-conf
+          name: site-conf
+      containers:
+        - name: title-translation-nodejs
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pixta-title-translation:latest
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "300Mi"
+              cpu: "200m"
+            limits:
+              memory: "600Mi"
+          readinessProbe:
+            failureThreshold: 5
+            successThreshold: 1
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 20
+            timeoutSeconds: 30
+            periodSeconds: 60
+          livenessProbe:
+            failureThreshold: 5
+            successThreshold: 1
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 20
+            timeoutSeconds: 30
+            periodSeconds: 60
+          envFrom:
+            - secretRef:
+                name: title-translation-secret
+            - configMapRef:
+                name: title-translation-common-env
+        - name: nginx
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/nginx:stable
+          imagePullPolicy: Always
+          resources:
+            limits:
+              cpu: 200m
+              memory: 64Mi
+            requests:
+              cpu: 100m
+              memory: 32Mi
+          ports:
+            - containerPort: 80
+            - containerPort: 443
+          volumeMounts:
+            - mountPath: /config
+              name: nginx-conf
+            - mountPath: /etc/nginx/sites-enabled/
+              name: site-conf
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - sh
+                  - -c
+                  - cp -pf /config/nginx.conf /etc/nginx/nginx.conf && nginx -s reload
+            preStop:
+              exec:
+                command:
+                  - /usr/sbin/nginx
+                  - -s
+                  - quit

@@ -1,0 +1,9 @@
+resources:
+  - deployment.yaml
+configMapGenerator:
+  - name: worker-png-to-jpg-common-env
+    literals:
+      - AIRBRAKE_PROJECT_ID=185980
+      - SQS_ENDPOINT=sqs.ap-northeast-1.amazonaws.com
+generatorOptions:
+  disableNameSuffixHash: true

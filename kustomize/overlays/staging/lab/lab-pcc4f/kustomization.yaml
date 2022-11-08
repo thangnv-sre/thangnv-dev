@@ -1,0 +1,12 @@
+bases:
+  - ../../../../base/lab/lab-pcc4f
+resources:
+  # - scaledobject.yaml
+configMapGenerator:
+  - name: lab-pcc4f-conf
+    files:
+      - configmap/staging.yaml
+generatorOptions:
+  disableNameSuffixHash: true
+patchesStrategicMerge:
+  - deployment_patch.yaml

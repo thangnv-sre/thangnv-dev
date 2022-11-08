@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lab-face-search-2
+  labels:
+    app: lab-face-search-2
+    stage: staging
+spec:
+  selector:
+    matchLabels:
+      app: lab-face-search-2
+      stage: staging
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+      labels:
+        app: lab-face-search-2
+        stage: staging
+    spec:
+      # volumes:
+      #   - configMap:
+      #       items:
+      #         - key: staging.yaml
+      #           path: config.yaml
+      #       name: lab-face-search-2-conf
+      #     name: pcc-conf
+      containers:
+        - name: lab-face-search-2
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/model-facesearch2:latest
+          # volumeMounts:
+          #   - mountPath: /pcc_v3/config/photo
+          #     name: pcc-conf

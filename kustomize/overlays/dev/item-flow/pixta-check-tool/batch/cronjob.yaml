@@ -1,0 +1,112 @@
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: check-tool-start-database
+  labels:
+    app: check-tool-start-database
+    stage: staging
+spec:
+  schedule: "15 00 * * *"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/stg-pixta-check-tool
+        spec:
+          containers:
+            - name: awscli
+              image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/aws:latest
+              command:
+                [
+                  "/bin/sh",
+                  "-c",
+                  "aws rds start-db-instance --db-instance-identifier pixta-check-tool-vpc",
+                ]
+          restartPolicy: OnFailure
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: check-tool-stop-database
+  labels:
+    app: check-tool-stop-database
+    stage: staging
+spec:
+  schedule: "17 14 * * *"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/stg-pixta-check-tool
+        spec:
+          containers:
+            - name: awscli
+              image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/aws:latest
+              command:
+                [
+                  "/bin/sh",
+                  "-c",
+                  "aws rds stop-db-instance --db-instance-identifier pixta-check-tool-vpc",
+                ]
+          restartPolicy: OnFailure
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: check-tool-restore-database
+  labels:
+    app: check-tool-restore-database
+    stage: staging
+spec:
+  schedule: "05 21 * * *"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            iam.amazonaws.com/role: arn:aws:iam::045675425505:role/stg-pixta-check-tool
+        spec:
+          containers:
+            - name: awscli
+              image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/aws:latest
+              command:
+                [
+                  "/bin/sh",
+                  "-c",
+                  "yum install -y mysql util-linux-ng && sleep 30 && ./checktool_rds_restore.sh",
+                ]
+              env:
+                - name: LANG
+                  value: en_GB.UTF-8
+                - name: AWS_DEFAULT_OUTPUT
+                  value: text
+                - name: AWS_DEFAULT_REGION
+                  value: ap-northeast-1
+              volumeMounts:
+                - mountPath: /aws/functions
+                  name: restore-conf
+                  subPath: functions
+                - mountPath: /aws/config/checktool_db_info
+                  name: restore-conf
+                  subPath: checktool_db_info
+                - mountPath: /aws/checktool_rds_restore.sh
+                  name: restore-conf
+                  subPath: checktool_rds_restore.sh
+                - mountPath: /root/.aws/
+                  name: aws-credentials
+                  readOnly: true
+              workingDir: /aws
+          restartPolicy: OnFailure
+          volumes:
+            - configMap:
+                name: restore-db-snapshot-config
+                defaultMode: 0755
+              name: restore-conf
+            - secret:
+                secretName: restore-db-snapshot-secret
+              name: aws-credentials

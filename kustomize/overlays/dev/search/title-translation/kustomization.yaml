@@ -1,0 +1,18 @@
+bases:
+  - ../../../../base/search/title-translation
+resources:
+  # - hpa.yaml
+  - secret.yaml
+  - ingress.yaml
+configMapGenerator:
+  - name: title-translation-common-env
+    behavior: merge
+    literals:
+      - NODE_ENV=staging
+  - name: title-translation-nginx-conf
+    behavior: merge
+    files:
+      - configmap/title-translation.conf
+patchesStrategicMerge:
+  - deployment_patch.yaml
+  - service_patch.yaml

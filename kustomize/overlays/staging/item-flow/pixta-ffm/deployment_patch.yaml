@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ffm
+  labels:
+    app: ffm
+    stage: staging
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ffm
+      stage: staging
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+      labels:
+        app: ffm
+        stage: staging

@@ -1,0 +1,14 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: tag-suggestion-ingress-external
+  annotations:
+    kubernetes.io/ingress.class: nginx-external
+spec:
+  rules: 
+    - host: tag-suggestion-staging.pixtastock.com
+      http:
+        paths:
+          - backend:
+              serviceName: tag-suggestion-svc
+              servicePort: 80

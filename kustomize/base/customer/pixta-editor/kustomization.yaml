@@ -1,0 +1,25 @@
+resources:
+  - deployment.yaml
+  - service.yaml
+  # - cronjob.yaml
+  - configmap/pixta-common-env.yaml
+configMapGenerator:
+  - name: editor-common-env
+    literals:
+      - RAILS_ROOT=/usr/src/editor-api
+      - AWS_ASSET_HOST=s3-ap-northeast-1.amazonaws.com
+      - REGION=ap-northeast-1
+      - AWS_REGION=ap-northeast-1
+      - RAILS_LOG_TO_STDOUT=true
+      - SMTP_HOST=smtp.sendgrid.net
+      - SMTP_PORT=587
+      - SMTP_DOMAIN=pixta.jp
+      - SMTP_AUTH=plain
+  - name: editor-nginx-conf
+    files:
+      - configmap/nginx.conf
+  - name: editor-frontend-nginx-conf
+    files:
+      - configmap/nginx.conf
+generatorOptions:
+  disableNameSuffixHash: false

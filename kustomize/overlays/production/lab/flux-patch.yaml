@@ -1,0 +1,39 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.image-highscore: regex:^prod.*
+    fluxcd.io/tag.init-ckpts: glob:alpine-3.11
+  name: image-highscore
+  namespace: prod-lab
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: image-highscore
+      $setElementOrder/initContainers:
+      - name: init-ckpts
+      - name: init-ckpt
+      - name: init-tagemb
+      containers:
+      - image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/lab-highscore-image:prod-03d2bbc
+        name: image-highscore
+      initContainers:
+      - image: xueshanf/awscli:alpine-3.11
+        name: init-ckpts
+      - image: xueshanf/awscli:alpine-3.16
+        name: init-ckpt
+      - image: xueshanf/awscli:alpine-3.16
+        name: init-tagemb
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.init-ckpt: glob:alpine-3.11
+    fluxcd.io/tag.review-assistant: regex:^v1.1.0.*
+  name: review-assistant
+  namespace: prod-lab

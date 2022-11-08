@@ -1,0 +1,14 @@
+bases:
+  - ../../../../base/item-flow/worker-thumbnail
+resources:
+  # - hpa.yaml
+  - secret.yaml
+  - scaledobject.yaml
+  # - wpa.yaml
+configMapGenerator:
+  - name: worker-thumbnail-common-env
+    behavior: merge
+    literals:
+      - RAILS_ENV=production
+patchesStrategicMerge:
+  - deployment_patch.yaml

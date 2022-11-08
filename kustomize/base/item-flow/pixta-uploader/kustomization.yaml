@@ -1,0 +1,16 @@
+resources:
+  - deployment.yaml
+  - service.yaml
+  - cronjob.yaml
+  - pvc.yaml
+configMapGenerator:
+  - name: pixta-uploader-application-env
+    literals:
+      - RAILS_ROOT=/var/www/pixta-uploader
+      - RAILS_LOG_TO_STDOUT=true
+  - name: pixta-uploader-web-config
+    files:
+      - configmap/nginx.conf
+      - configmap/pixta-uploader.conf
+generatorOptions:
+  disableNameSuffixHash: false

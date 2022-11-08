@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pixta-uploader
+  labels:
+    app: pixta-uploader
+spec:
+  selector:
+    matchLabels:
+      app: pixta-uploader
+  template:
+    metadata:
+      labels:
+        app: pixta-uploader
+    spec:
+      volumes:
+        - name: app
+          persistentVolumeClaim:
+            claimName: pixta-uploader-jp-pvc
+        - name: web-conf
+          configMap:
+            name: pixta-uploader-web-config
+      containers:
+        - name: pixta-uploader-nginx
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/nginx:stable
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /srv/upload/
+              name: app
+            - mountPath: /config
+              name: web-conf
+          envFrom:
+            - configMapRef:
+                name: pixta-uploader-nginx-env
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - sh
+                  - -c
+                  - rm -f /etc/nginx/conf.d/default.conf
+                    && envsubst "$(env | awk -F = '{printf " $%s", $1}')" < /config/pixta-uploader.conf > /etc/nginx/conf.d/pixta-uploader.conf
+                    && cp -pf /config/nginx.conf /etc/nginx/nginx.conf && nginx -s reload
+            preStop:
+              exec:
+                command:
+                  - /usr/sbin/nginx
+                  - -s
+                  - quit
+
+        # Nodejs Application Container
+        - name: pixta-uploader-app
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/pixta-uploader:latest
+          imagePullPolicy: Always
+          command:
+            - /bin/bash
+            - -c
+          args:
+            - /usr/bin/node /srv/www/pixta_uploader/app.js -e $DEPLOY_ENV
+          volumeMounts:
+            - mountPath: /srv/upload/
+              name: app
+            - mountPath: /config
+              name: web-conf
+          resources:
+            requests:
+              memory: "2Gi"
+              cpu: "800m"
+            limits:
+              memory: "3Gi"
+          envFrom:
+            - configMapRef:
+                name: pixta-uploader-application-env
+            - secretRef:
+                name: pixta-uploader-secret

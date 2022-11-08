@@ -1,0 +1,12 @@
+bases:
+  - ../../../../base/contributor/footage-resize-demand
+resources:
+  - secret.yaml
+  # - scaledobject.yaml
+configMapGenerator:
+  - name: footage-resize-demand-common-env
+    behavior: merge
+    literals:
+      - RESIZE_ENV=staging
+patchesStrategicMerge:
+  - deployment_patch.yaml

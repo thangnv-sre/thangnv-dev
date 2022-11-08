@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker-thumbnail
+  labels:
+    app: worker-thumbnail
+    stage: staging
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: worker-thumbnail
+      stage: staging
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: arn:aws:iam::045675425505:role/pixtavietnam-staging
+      labels:
+        app: worker-thumbnail
+        stage: staging
+    spec:
+      containers:
+        - name: worker-thumbnail
+          resources:
+            limits:
+              memory: "2.5Gi"
+            requests:
+              memory: "750Mi"
+              cpu: "700m"
+          envFrom:
+            - configMapRef:
+                name: worker-thumbnail-common-env
+            - secretRef:
+                name: worker-thumbnail-secret

@@ -1,0 +1,24 @@
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: pfm-pdb
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: pfm
+      stage: production
+
+---
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: pfm-delayed-job-pdb
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: pfm-delayed-job
+      stage: production
+
+

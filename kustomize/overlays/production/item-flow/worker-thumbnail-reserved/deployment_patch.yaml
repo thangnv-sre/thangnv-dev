@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker-thumbnail-reserved
+  labels:
+    app: worker-thumbnail-reserved
+    stage: production
+  annotations:
+    kube-score/ignore: deployment-has-poddisruptionbudget
+spec:
+  selector:
+    matchLabels:
+      app: worker-thumbnail-reserved
+      stage: production
+  template:
+    metadata:
+      labels:
+        app: worker-thumbnail-reserved
+        stage: production
+    spec:
+      nodeSelector:
+        high-cpu-spot-public-instance: "true"
+      tolerations:
+        - key: "high-cpu-spot-public-instance"
+          operator: "Equal"
+          value: "true"
+          effect: "PreferNoSchedule"
+      containers:
+        - name: worker-thumbnail-reserved
+          image: 045675425505.dkr.ecr.ap-northeast-1.amazonaws.com/worker-thumbnail-reserved:prod-reserved-a0ff496
