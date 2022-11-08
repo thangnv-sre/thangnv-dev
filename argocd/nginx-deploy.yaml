@@ -19,12 +19,9 @@ spec:
         image: nginx:1.14.2
         ports:
         - containerPort: 80
-        env:
-          - name: foo
-            valueFrom:
-              secretKeyRef:
-                name: aws-thangnv
-                key: key
+        envFrom:
+          - secretRef:
+              name: aws-thangnv
         volumeMounts:
         - name: foo
           mountPath: "/etc/foo"
