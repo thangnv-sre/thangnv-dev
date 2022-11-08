@@ -1,6 +1,0 @@
-namespace: dev-customer
-bases:
-  - pixta-editor
-  - pixta-downloader
-  # - sendmail
-  # - pixta-mass-mailer

@@ -1,4 +1,0 @@
-bases:
-  - ../../../../base/item-flow/misc
-patchesStrategicMerge:
-  - keda_patch.yaml

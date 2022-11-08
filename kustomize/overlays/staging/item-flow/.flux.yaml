@@ -1,8 +1,0 @@
-version: 1
-patchUpdated:
-  generators:
-    # - command: sops -d --output secret.yaml secret.enc.yaml
-    - command: find -name secret.enc.yaml -print0 | xargs -0 -n1 dirname | sort -u | xargs -I % sh -c 'sops -d --output %/secret.yaml %/secret.enc.yaml'
-    - command: kustomize build .
-    - command: find -name secret.yaml | xargs -I % sh -c 'rm -rf %'
-  patchFile: flux-patch.yaml

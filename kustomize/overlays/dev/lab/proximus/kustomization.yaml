@@ -1,7 +1,0 @@
-bases:
-  - ../../../../base/lab/proximus
-resources:
-  - ingress.yaml
-patchesStrategicMerge:
-  - deployment_patch.yaml
-  - service_patch.yaml

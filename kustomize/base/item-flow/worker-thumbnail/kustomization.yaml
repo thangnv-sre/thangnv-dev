@@ -1,8 +1,0 @@
-resources:
-  - deployment.yaml
-configMapGenerator:
-  - name: worker-thumbnail-common-env
-    literals:
-      - AIRBRAKE_PROJECT_ID=185980
-generatorOptions:
-  disableNameSuffixHash: true

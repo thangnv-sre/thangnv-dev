@@ -1,5 +1,0 @@
-namespace: prod-customer
-bases:
-  - pixta-editor
-  - pixta-downloader
-  # - sendmail

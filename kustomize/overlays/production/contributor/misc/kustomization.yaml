@@ -1,4 +1,0 @@
-bases:
-  - ../../../../base/contributor/misc
-patchesStrategicMerge:
-  - keda_patch.yaml

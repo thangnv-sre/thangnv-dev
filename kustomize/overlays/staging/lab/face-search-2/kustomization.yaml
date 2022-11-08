@@ -1,8 +1,0 @@
-bases:
-  - ../../../../base/lab/face-search-2
-resources:
-  - ingress.yaml
-patchesStrategicMerge:
-  - deployment_patch.yaml
-  - service_patch.yaml
-

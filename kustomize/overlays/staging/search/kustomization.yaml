@@ -1,5 +1,0 @@
-namespace: stg-search
-bases:
-  - title-translation
-  - learning-to-rank
-  - simple-dictionaries

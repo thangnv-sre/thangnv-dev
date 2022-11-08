@@ -1,4 +1,0 @@
-bases:
-  - ../../../../base/lab/misc
-patchesStrategicMerge:
-  - keda_patch.yaml
