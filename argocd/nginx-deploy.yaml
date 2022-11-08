@@ -19,3 +19,11 @@ spec:
         image: nginx:1.14.2
         ports:
         - containerPort: 80
+        volumeMounts:
+        - name: foo
+          mountPath: "/etc/foo"
+          readOnly: true
+      volumes:
+      - name: foo
+        secret:
+          secretName: aws-thangnv
