@@ -28,6 +28,9 @@ spec:
           mountPath: "/etc/foo"
           readOnly: true
       volumes:
-      - name: foo
-        secret:
-          secretName: aws-thangnv
+      - name: secrets-store-inline
+        csi:
+          driver: SecretProviderClass
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: "aws-secrets"
