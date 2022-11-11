@@ -9,5 +9,6 @@ commonLabels:
   app: nginx
 
 resources:
-- nginx-deploy.yaml
+# - nginx-deploy.yaml
 - Secret-aws-class.yaml
+- redis.yaml
