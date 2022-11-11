@@ -23,14 +23,14 @@ spec:
         envFrom:
           - secretRef:
               name: aws-thangnv
-      volumeMounts:
-      - name: secrets-store-inline
-        mountPath: "/mnt/secrets-store"
-        readOnly: true
-    volumes:
-      - name: secrets-store-inline
-        csi:
-          driver: secrets-store.csi.k8s.io
-          readOnly: true
-          volumeAttributes:
-            secretProviderClass: "aws-secrets"
+    #   volumeMounts:
+    #   - name: secrets-store-inline
+    #     mountPath: "/mnt/secrets-store"
+    #     readOnly: true
+    # volumes:
+    #   - name: secrets-store-inline
+    #     csi:
+    #       driver: secrets-store.csi.k8s.io
+    #       readOnly: true
+    #       volumeAttributes:
+    #         secretProviderClass: "aws-secrets"
