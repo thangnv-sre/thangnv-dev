@@ -5,7 +5,7 @@ metadata:
   labels:
     app: nginx
 spec:
-  revisionHistoryLimit: 5
+  revisionHistoryLimit: 6
   replicas: 3
   selector:
     matchLabels:
