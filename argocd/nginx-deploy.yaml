@@ -23,10 +23,10 @@ spec:
         # envFrom:
         #   - secretRef:
         #       name: secrets-store-inline
-      volumeMounts:
-      - name: secrets-store-inline
-        mountPath: "/mnt/secrets-store"
-        readOnly: true
+        volumeMounts:
+        - name: secrets-store-inline
+          mountPath: "/mnt/secrets-store"
+          readOnly: true
     volumes:
       - name: secrets-store-inline
         csi:
