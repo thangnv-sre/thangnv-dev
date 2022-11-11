@@ -24,7 +24,7 @@ spec:
           - secretRef:
               name: aws-thangnv
         volumeMounts:
-        - name: foo
+        - name: secrets-store-inline
           mountPath: "/etc/foo"
           readOnly: true
       volumes:
