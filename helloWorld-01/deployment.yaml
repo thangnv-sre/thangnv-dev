@@ -21,7 +21,7 @@ spec:
         ports:
         - containerPort: 80
         env:
-        - name: DATABASE_PASSWORD
+        - name: DATABASEPASSWORD
           valueFrom:
             secretKeyRef:
               name: database_password # Name of the secret in Kubernetes Secrets, which has been set in the secretProviderClass 
