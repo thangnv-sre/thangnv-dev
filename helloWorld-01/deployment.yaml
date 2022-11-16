@@ -20,6 +20,12 @@ spec:
         image: nginx:1.14.1
         ports:
         - containerPort: 80
+        envFrom:
+        - csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: nginx-deployment-spc
         volumeMounts:
         - name: secrets-store-inline
           mountPath: "/etc/foo"
