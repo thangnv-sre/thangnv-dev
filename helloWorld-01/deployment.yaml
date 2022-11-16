@@ -20,9 +20,12 @@ spec:
         image: nginx:1.14.1
         ports:
         - containerPort: 80
-        envFrom:
-        - secretRef:
-            name: secrets-store-inline
+        env:
+        - name: password-env
+          valueFrom:
+            secretKeyRef:
+              name: password-1 # Name of the secret in Kubernetes Secrets, which has been set in the secretProviderClass 
+              key: password
         volumeMounts:
         - name: secrets-store-inline
           mountPath: "/etc/foo"
