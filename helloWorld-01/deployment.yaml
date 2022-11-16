@@ -21,10 +21,10 @@ spec:
         ports:
         - containerPort: 80
         env:
-          - name: APIKEY
+          - name: API_KEY
             valueFrom:
               secretKeyRef:
-                name: applicationapikey
+                name: application-api-key
                 key: password
         volumeMounts:
           - name: api-secret
