@@ -26,10 +26,10 @@ spec:
               secretKeyRef:
                 name: applicationapikey
                 key: password
-          volumeMounts:
-            - name: api-secret
-              mountPath: "/mnt/secrets-store"
-              readOnly: true
+        volumeMounts:
+          - name: api-secret
+            mountPath: "/mnt/secrets-store"
+            readOnly: true
       volumes:
         - name: api-secret
           csi:
