@@ -25,10 +25,10 @@ spec:
           mountPath: "/mnt/secrets-store"
           readOnly: true
         env:
-        - name: DATABASE_PASSWORD
+        - name: DATABASE-PASSWORD
           valueFrom:
             secretKeyRef:
-              name: database_password # Name of the secret in Kubernetes Secrets, which has been set in the secretProviderClass 
+              name: database-password # Name of the secret in Kubernetes Secrets, which has been set in the secretProviderClass 
               key: password
       volumes:
       - name: secrets-store-inline
