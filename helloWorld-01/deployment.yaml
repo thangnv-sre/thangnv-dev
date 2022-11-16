@@ -20,20 +20,20 @@ spec:
         image: nginx:1.14.1
         ports:
         - containerPort: 80
-        env:
-          - name: API_KEY
-            valueFrom:
-              secretKeyRef:
-                name: application-api-key
-                key: password
         volumeMounts:
-          - name: api-secret
-            mountPath: "/mnt/secrets-store"
-            readOnly: true
+        - name: secrets-store-inline
+          mountPath: "/mnt/secrets-store"
+          readOnly: true
+        env:
+        - name: DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: database_password # Name of the secret in Kubernetes Secrets, which has been set in the secretProviderClass 
+              key: password
       volumes:
-        - name: api-secret
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: "aws-secret-application"
+      - name: secrets-store-inline
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: "secrets-provider"
