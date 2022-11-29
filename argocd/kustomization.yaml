@@ -10,6 +10,6 @@ commonLabels:
 
 resources:
 - nginx-deploy.yaml
-- secrets.yaml
+# - secrets.yaml
 # - Secret-aws-class.yaml
 # - redis.yaml
