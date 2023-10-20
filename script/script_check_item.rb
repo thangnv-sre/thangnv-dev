@@ -4,7 +4,12 @@ require 'csv'
 
 files = Dir["file/*"]
 push_file = []
+@production_config = YAML.load(ERB.new(File.read("#{Rails.root}/config/aws/production.yml")).result)['footage']['s3']['backup_bucket'].freeze and true
+FOOTAGE_SIZE_CONFIG = YAML.load(ERB.new(File.read("#{Rails.root}/config/footage_size.yml")).result).freeze and true
+
 files.each do |file|
+  puts file
+  
   item_ids = CSV.read(file, headers: true).map { |row| row['item_id'].to_i } and true
   # get item data from the list of item_ids with the fields we need: id, language
   footages = []
@@ -17,12 +22,10 @@ files.each do |file|
   items.uniq! and true
 
   @footage_hash = {}
-  @production_config = YAML.load(ERB.new(File.read("#{Rails.root}/config/aws/production.yml")).result)['footage']['s3']['backup_bucket'].freeze and true
   @products = {}
   Product.all.each do |product|
     @products[product.size_name] = product[:size_no]
   end and true
-  FOOTAGE_SIZE_CONFIG = YAML.load(ERB.new(File.read("#{Rails.root}/config/footage_size.yml")).result).freeze and true
 
 
 
