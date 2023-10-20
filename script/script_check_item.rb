@@ -1,8 +1,8 @@
 require 'csv'
 
 # read csv file that have title in first line and convert to array of integer
-files = ["a","b","c"]
 
+files = Dir["file/*"]
 push_file = []
 files.each do |file|
   item_ids = CSV.read(file, headers: true).map { |row| row['item_id'].to_i } and true
