@@ -74,6 +74,8 @@ files.each do |file|
     "#{product_directory(item_id)}/#{item_id}-#{size_no}.#{product_ext}"
   end
 
+  puts @footage_hash.count
+
   #wirte to csv file, create if not exist
   @production_config.keys.each do |aws_region_code|  
     push_file << "ng_footage_link_to_restore_in_#{aws_region_code}_region.csv" unless push_file.include?("ng_footage_link_to_restore_in_#{aws_region_code}_region.csv")
