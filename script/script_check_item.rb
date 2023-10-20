@@ -79,7 +79,7 @@ files.each do |file|
   #wirte to csv file, create if not exist
   @production_config.keys.each do |aws_region_code|  
     push_file << "ng_footage_link_to_restore_in_#{aws_region_code}_region.csv" unless push_file.include?("ng_footage_link_to_restore_in_#{aws_region_code}_region.csv")
-    CSV.open("ng_footage_link_to_restore_in_#{aws_region_code}_region.csv", "w") do |csv|
+    CSV.open("ng_footage_link_to_restore_in_#{aws_region_code}_region.csv", "a") do |csv|
       item_ids.each do |item_id|
         if @footage_hash[item_id] && @footage_hash[item_id][:aws_region_code] == aws_region_code
           backup_bucket = backup_bucket_name(@footage_hash[item_id][:aws_region_code])
@@ -94,5 +94,5 @@ end
 s3 = AWS::S3.new()
 push_file.each do |file|
   object = s3.buckets["pixta-scripts-stg"].objects["sre_scripts/#{file}"]
-  object.write(file)
+  object.write(File.open(file))
 end
