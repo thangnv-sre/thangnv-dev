@@ -9,7 +9,7 @@ FOOTAGE_SIZE_CONFIG = YAML.load(ERB.new(File.read("#{Rails.root}/config/footage_
 
 files.each do |file|
   puts file
-  
+
   item_ids = CSV.read(file, headers: true).map { |row| row['item_id'].to_i } and true
   # get item data from the list of item_ids with the fields we need: id, language
   footages = []
@@ -20,6 +20,8 @@ files.each do |file|
   end
   footages.uniq! and true
   items.uniq! and true
+
+  puts footages.count
 
   @footage_hash = {}
   @products = {}
